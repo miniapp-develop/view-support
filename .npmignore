@@ -1,0 +1,10 @@
+pages
+app.*
+project.config.json
+project.private.config.json
+package-lock.json
+node_modules
+sitemap.json
+.idea
+*.iml
+assets
