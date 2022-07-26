@@ -1,8 +1,8 @@
 {
-  "name": "view-support",
+  "name": "@mini-dev/view-support",
   "version": "0.0.1",
-  "description": "",
-  "main": ".eslintrc.js",
+  "description": "mini app view support",
+  "main": "./lib/index.js",
   "directories": {
     "lib": "lib"
   },

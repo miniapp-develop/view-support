@@ -1,0 +1,16 @@
+.main{
+    margin: 0.5em;
+}
+
+.mini-class-1 {
+    color: red;
+}
+
+.mini-class-2 {
+    color: red;
+}
+
+.custom-class-2 {
+    font-size: 2em!important;
+    font-style: italic;
+}

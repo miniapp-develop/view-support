@@ -1,15 +1,9 @@
 {
-  "appid": "wx132bb522ad967270",
   "compileType": "miniprogram",
-  "libVersion": "2.25.1",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
   "setting": {
     "urlCheck": true,
     "coverView": true,
-    "es6": true,
+    "es6": false,
     "postcss": true,
     "lazyloadPlaceholderEnable": false,
     "preloadBackgroundData": false,
@@ -32,12 +26,18 @@
     },
     "disableUseStrict": false,
     "useCompilerPlugins": false,
-    "minifyWXML": true
+    "minifyWXML": true,
+    "useIsolateContext": true,
+    "ignoreUploadUnusedFiles": true
   },
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html"
+  "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  }
 }
