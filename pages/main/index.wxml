@@ -1,4 +1,5 @@
 <view class="main">
     <custom-view-1 mini-class="mini-class-1"/>
     <custom-view-2 mini-class="mini-class-2" custom-class="custom-class-2"/>
+    <custom-view-2 mini-class="mini-class-2" custom-class="custom-class-2" mini-name="customName"/>
 </view>
