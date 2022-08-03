@@ -1,4 +1,4 @@
-.main{
+.main {
     margin: 0.5em;
 }
 
@@ -11,6 +11,11 @@
 }
 
 .custom-class-2 {
-    font-size: 2em!important;
+    font-size: 2em !important;
     font-style: italic;
+}
+
+.added {
+    font-size: 1.2em;
+    padding-left: 0.5em;
 }

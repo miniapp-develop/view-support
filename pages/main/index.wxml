@@ -2,4 +2,11 @@
     <custom-view-1 mini-class="mini-class-1"/>
     <custom-view-2 mini-class="mini-class-2" custom-class="custom-class-2"/>
     <custom-view-2 mini-class="mini-class-2" custom-class="custom-class-2" mini-name="customName"/>
+
+    <view class="added">
+        view data:{{miniIgnore}}
+    </view>
+    <view class="added">
+        pure data:{{_miniIgnore}}
+    </view>
 </view>

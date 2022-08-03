@@ -38,7 +38,7 @@ MyComponent({
 
 4、 组合调用
 
-如果想使用其他已封装的 Component，也可以显式指定，以默认的 MiniComponent 为例：
+如果想使用其他已封装的 Component 构造方法，也可以通过参数显式指定，以预置的 MiniComponent 为例：
 
 ```javascript
 import {MiniComponent} from "@mini-dev/view-support";
@@ -50,3 +50,23 @@ MyComponent({
 }, MiniComponent);
 
 ```
+
+或者在创建的时候直接绑定：
+
+```javascript
+import {createPresetComponent, MiniComponent} from "@mini-dev/view-support";
+
+const MyComponent = createPresetComponent({
+    ...
+}, MiniComponent);
+
+MyComponent({
+    ...
+});
+
+```
+
+## ChangeLog
+
+### 0.0.3
+1. 增加 Page 相关方法；

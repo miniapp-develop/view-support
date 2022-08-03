@@ -39,5 +39,7 @@
   "packOptions": {
     "ignore": [],
     "include": []
-  }
+  },
+  "appid": "wx132bb522ad967270",
+  "libVersion": "2.13.0"
 }

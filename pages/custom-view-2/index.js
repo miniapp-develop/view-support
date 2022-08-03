@@ -1,4 +1,4 @@
-import {MiniComponent, createPresetComponent} from "../../lib/index";
+import {createPresetComponent, MiniComponent} from "../../lib/index";
 
 const CustomComponent = createPresetComponent({
     externalClasses: ['custom-class'],
