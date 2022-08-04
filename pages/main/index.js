@@ -1,12 +1,17 @@
-import {MiniPage} from "../../lib/index";
-
-MiniPage({
-    data: {
-        miniIgnore: 'this is view data',
-        _miniIgnore: 'this is pure data'
-    },
+Page({
     onLoad(query) {
-        console.log(this.data.miniIgnore);
-        console.log(this.data._miniIgnore);
+    },
+    onTap(e) {
+        const name = e.currentTarget.dataset.name;
+        console.log(name)
+        if (name === 'preset') {
+            wx.navigateTo({
+                url: '/pages/preset/main/index'
+            });
+        } else if (name === 'relation') {
+            wx.navigateTo({
+                url: '/pages/relation/main/index'
+            });
+        }
     }
 });

@@ -1,0 +1,11 @@
+.v-buttons {
+    display: flex;
+}
+
+.v-button {
+    flex: 1;
+    margin: 0.5em;
+    padding: 0.5em;
+    text-align: center;
+    background: #e4e4e4;
+}

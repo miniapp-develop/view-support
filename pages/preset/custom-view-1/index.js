@@ -1,4 +1,4 @@
-import {MiniComponent} from "../../lib/index";
+import {MiniComponent} from "../../../lib/index";
 
 MiniComponent({
     properties: {},

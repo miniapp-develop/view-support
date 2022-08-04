@@ -1,0 +1,36 @@
+<view>
+    <view class="v-buttons">
+        <view class="v-button" bind:tap="onTapShowChild1">select child 1</view>
+        <view class="v-button" bind:tap="onTapShowChild2">select child 2</view>
+    </view>
+    <parent-view mini-data="{{active}}">
+        <child-view mini-data="t1"/>
+        <child-view mini-data="t2"/>
+    </parent-view>
+
+    <view class="v-buttons">
+        <view class="v-button" bind:tap="onTap2" data-name="0">select 1</view>
+        <view class="v-button" bind:tap="onTap2" data-name="1">select 2</view>
+        <view class="v-button" bind:tap="onTap2" data-name="2">select 3</view>
+        <view class="v-button" bind:tap="onTap2" data-name="3">select 4</view>
+    </view>
+    <parent-view-2 mini-data="{{active2}}">
+        <child-view-2/>
+        <child-view-2/>
+        <child-view-2/>
+        <child-view-2/>
+    </parent-view-2>
+
+    <view class="v-buttons">
+        <view class="v-button" bind:tap="onTap3" data-name="0">select 1</view>
+        <view class="v-button" bind:tap="onTap3" data-name="1">select 2</view>
+        <view class="v-button" bind:tap="onTap3" data-name="2">select 3</view>
+        <view class="v-button" bind:tap="onTap3" data-name="3">select 4</view>
+    </view>
+    <parent-view-3 mini-data="{{miniData3}}">
+        <child-view-3/>
+        <child-view-3/>
+        <child-view-3/>
+        <child-view-3/>
+    </parent-view-3>
+</view>
