@@ -1,5 +1,3 @@
-const {MiniComponent} = require("../../../lib/index");
+import {ParentView} from './pc';
 
-import {parent} from './pc';
-
-parent({}, MiniComponent);
+ParentView();
