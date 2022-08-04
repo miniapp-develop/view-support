@@ -1,5 +1,5 @@
 const {connectParentChildren, createPresetComponent, MiniComponent} = require("../../../lib/index");
-export const {parent, child} = connectParentChildren();
+export const {parent, child} = connectParentChildren({debug: true});
 
 const Parent = createPresetComponent({
     options: {virtualHost: true}
@@ -24,7 +24,6 @@ const ChildBehavior = Behavior({
     },
     methods: {
         onMiniChanged(newValue) {
-            console.log('changed')
             const childIndex = this.getMiniIndex();
             this.setData({
                 childIndex: childIndex,
