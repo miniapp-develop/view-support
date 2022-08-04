@@ -1,4 +1,4 @@
-import {MiniComponent} from "../../../lib/index";
+const {MiniComponent} = require("../../../lib/index");
 
 MiniComponent({
     properties: {},

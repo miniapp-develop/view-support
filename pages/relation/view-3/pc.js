@@ -1,3 +1,2 @@
-import {connectParentChildren} from '../../../lib/index';
-
+const {connectParentChildren} = require("../../../lib/index");
 export const {parent, child} = connectParentChildren();

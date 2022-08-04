@@ -1,4 +1,4 @@
-import {createPresetComponent, MiniComponent} from "../../../lib/index";
+const {createPresetComponent, MiniComponent} = require("../../../lib/index");
 
 const CustomComponent = createPresetComponent({
     externalClasses: ['custom-class'],

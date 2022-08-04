@@ -1,4 +1,4 @@
-import {MiniPage} from "../../../lib/index";
+const {MiniPage} = require("../../../lib/index");
 
 MiniPage({
     data: {

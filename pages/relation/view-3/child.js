@@ -1,4 +1,5 @@
-import {MiniComponent} from '../../../lib/index';
+const {MiniComponent} = require("../../../lib/index");
+
 import {child} from './pc';
 
 child({
