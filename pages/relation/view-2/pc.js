@@ -6,9 +6,7 @@ const Parent = createPresetComponent({
 });
 
 export const ParentView = function (option, f = MiniComponent) {
-    Parent(option, function (o) {
-        parent(o, f)
-    })
+    Parent(option, parent, f);
 }
 
 const ChildBehavior = Behavior({
@@ -42,7 +40,5 @@ const Child = createPresetComponent({
 });
 
 export const ChildView = function (option, f = MiniComponent) {
-    Child(option, function (o) {
-        child(o, f)
-    })
+    Child(option, child, f);
 }
