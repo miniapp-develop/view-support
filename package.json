@@ -13,6 +13,9 @@
     "type": "git",
     "url": "git+https://github.com/miniapp-develop/view-support.git"
   },
+  "devDependencies": {
+    "jest": "29.1.2"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

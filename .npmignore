@@ -9,3 +9,4 @@ sitemap.json
 .idea
 *.iml
 .eslintrc.js
+test
