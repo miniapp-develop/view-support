@@ -1,6 +1,6 @@
 {
   "name": "@mini-dev/view-support",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "mini app view support",
   "main": "./lib/index.js",
   "directories": {
