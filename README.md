@@ -1,9 +1,9 @@
 # ViewSupport
 
-为自定义小程序组件提供的辅助方法，包含功能支持：
+为自定义小程序组件提供的辅助方法，主要包含两类功能：
 
-1. 创建预设构造方法。
-2. 管理组件间关系
+1. 创建预设构造器；
+2. 管理组件间关系。
 
 ## 安装
 
@@ -15,13 +15,7 @@ npm install @mini-dev/view-support
 
 ### 创建预设构造方法
 
-1、 安装
-
-```shell script
-npm install @mini-dev/view-support
-```
-
-2、 创建预设组件
+1、 创建预设组件
 
 ```javascript
 const {createPresetComponent} = require("@mini-dev/view-support");
