@@ -19,7 +19,7 @@ describe('presets', () => {
             name: 'preset-value'
         });
         NewPage();
-        expect(Page).toBeCalledTimes(1);
+        expect(Page.mock.calls[0][0].name).toEqual('preset-value');
     });
     test('preset Page with option then merge option.data', () => {
         const NewPage = presets.Page({
