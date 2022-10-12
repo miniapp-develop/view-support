@@ -1,6 +1,6 @@
-const {MiniComponent} = require("../../../lib/index");
+const DemoComponent = require('../../DemoComponent');
 
-MiniComponent({
+DemoComponent({
     properties: {},
     data: {},
     methods: {}

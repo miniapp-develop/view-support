@@ -1,3 +1,4 @@
+const DemoComponent = require('../../DemoComponent');
 const {createPresetComponent, MiniComponent} = require("../../../lib/index");
 
 const CustomComponent = createPresetComponent({
