@@ -81,7 +81,7 @@ describe('presets', () => {
         });
         expect(Page.mock.calls[0][0].name).toEqual('newest-value');
     });
-    test('preset Page with behavior', () => {
+    test('preset Page with behavior then concat behavior', () => {
         const mockBehavior = Behavior({});
         const NewPage = presets.Page(mockBehavior);
         NewPage();
