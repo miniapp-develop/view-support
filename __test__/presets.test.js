@@ -1,6 +1,6 @@
 const presets = require('../lib/presets');
 
-describe('presets', () => {
+describe('presets Page', () => {
     beforeEach(() => {
         global.Page = jest.fn();
         global.Behavior = () => {
@@ -87,9 +87,10 @@ describe('presets', () => {
         NewPage();
         expect(Page.mock.calls[0][0].behaviors).toStrictEqual([mockBehavior]);
     });
-    test('preset Page with factory', () => {
+    test("preset Page with factory then call factory's constructor", () => {
         const fn = function (option, constructor = Page) {
             constructor({
+                ...option,
                 factoryName: 'factory-value'
             });
         }
@@ -97,4 +98,9 @@ describe('presets', () => {
         NewPage();
         expect(Page.mock.calls[0][0].factoryName).toEqual('factory-value');
     });
+
+    // test('preset Page with factory then merge different keys', () => {
+    // });
+    // test('preset Page with factory then override same keys', () => {
+    // });
 });
