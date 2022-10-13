@@ -87,4 +87,14 @@ describe('presets', () => {
         NewPage();
         expect(Page.mock.calls[0][0].behaviors).toStrictEqual([mockBehavior]);
     });
+    test('preset Page with factory', () => {
+        const fn = function (option, constructor = Page) {
+            constructor({
+                factoryName: 'factory-value'
+            });
+        }
+        const NewPage = presets.Page(fn);
+        NewPage();
+        expect(Page.mock.calls[0][0].factoryName).toEqual('factory-value');
+    });
 });
