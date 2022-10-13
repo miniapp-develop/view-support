@@ -87,23 +87,9 @@ describe('presets Page', () => {
         NewPage();
         expect(Page.mock.calls[0][0].behaviors).toStrictEqual([mockBehavior]);
     });
-    test("preset Page with factory then call factory's constructor", () => {
-        const fn = function (option, constructor = Page) {
-            constructor({
-                ...option,
-                factoryName: 'factory-value'
-            });
-        }
-        const NewPage = presets.Page(fn);
-        NewPage();
-        expect(Page.mock.calls[0][0].factoryName).toEqual('factory-value');
-    });
     test('preset Page with factory then merge different keys', () => {
-        const aOldPageFactory = presets.Page(function (option, constructor = Page) {
-            constructor({
-                ...option,
-                presetName: 'old-factory-value'
-            });
+        const aOldPageFactory = presets.Page({
+            presetName: 'old-factory-value'
         });
         const NewPage = presets.Page(aOldPageFactory);
         NewPage({
@@ -111,5 +97,37 @@ describe('presets Page', () => {
         });
         expect(Page.mock.calls[0][0].presetName).toEqual('old-factory-value');
         expect(Page.mock.calls[0][0].newName).toEqual('new-value');
+    });
+    test('preset Page with factory then override same keys', () => {
+        const aOldPageFactory = presets.Page({
+            presetName: 'old-factory-value',
+            sameName: 'same-old-factory-value'
+        });
+        const NewPage = presets.Page(aOldPageFactory);
+        NewPage({
+            newName: 'new-value',
+            sameName: 'same-new-value'
+        });
+        expect(Page.mock.calls[0][0].sameName).toEqual('same-new-value');
+    });
+    test('preset Page with factory then merge option.data', () => {
+        const aOldPageFactory = presets.Page({
+            data: {
+                presetName: 'old-factory-value',
+                sameName: 'same-old-factory-value'
+            }
+        });
+        const NewPage = presets.Page(aOldPageFactory);
+        NewPage({
+            data: {
+                newName: 'new-value',
+                sameName: 'same-new-value'
+            }
+        });
+        expect(Page.mock.calls[0][0].data).toStrictEqual({
+            presetName: 'old-factory-value',
+            newName: 'new-value',
+            sameName: 'same-new-value'
+        });
     });
 });
