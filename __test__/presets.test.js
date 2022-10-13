@@ -98,9 +98,18 @@ describe('presets Page', () => {
         NewPage();
         expect(Page.mock.calls[0][0].factoryName).toEqual('factory-value');
     });
-
-    // test('preset Page with factory then merge different keys', () => {
-    // });
-    // test('preset Page with factory then override same keys', () => {
-    // });
+    test('preset Page with factory then merge different keys', () => {
+        const aOldPageFactory = presets.Page(function (option, constructor = Page) {
+            constructor({
+                ...option,
+                presetName: 'old-factory-value'
+            });
+        });
+        const NewPage = presets.Page(aOldPageFactory);
+        NewPage({
+            newName: 'new-value'
+        });
+        expect(Page.mock.calls[0][0].presetName).toEqual('old-factory-value');
+        expect(Page.mock.calls[0][0].newName).toEqual('new-value');
+    });
 });
