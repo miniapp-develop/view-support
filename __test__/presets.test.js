@@ -9,19 +9,20 @@ describe('presets Page', () => {
             return fn();
         };
     });
-    test('preset Page with nothing', () => {
+    test('when preset with nothing then apply undefined', () => {
         const NewPage = presets.Page();
         NewPage();
         expect(Page).toBeCalledTimes(1);
+        expect(Page.mock.calls[0][0].name).toBeUndefined();
     });
-    test('preset Page with option', () => {
+    test('when preset with option then apply preset option', () => {
         const NewPage = presets.Page({
             name: 'preset-value'
         });
         NewPage();
         expect(Page.mock.calls[0][0].name).toEqual('preset-value');
     });
-    test('preset Page with option then merge option.data', () => {
+    test('when preset with option then merge option.data', () => {
         const NewPage = presets.Page({
             data: {
                 name1: 'preset-value'
@@ -37,7 +38,7 @@ describe('presets Page', () => {
             name2: 'newest-value'
         });
     });
-    test('preset Page with option then merge option.options', () => {
+    test('when preset with option then merge option.options', () => {
         const NewPage = presets.Page({
             options: {
                 name1: 'preset-value'
@@ -53,7 +54,7 @@ describe('presets Page', () => {
             name2: 'newest-value'
         });
     });
-    test('preset Page with option then concat option.behaviors', () => {
+    test('when preset with option then concat option.behaviors', () => {
         const NewPage = presets.Page({
             behaviors: [1]
         });
@@ -62,7 +63,7 @@ describe('presets Page', () => {
         });
         expect(Page.mock.calls[0][0].behaviors).toStrictEqual([1, 2]);
     });
-    test('preset Page with option then merge option different keys', () => {
+    test('when preset with option then merge different keys', () => {
         const NewPage = presets.Page({
             name1: 'preset-value'
         });
@@ -72,7 +73,7 @@ describe('presets Page', () => {
         expect(Page.mock.calls[0][0].name1).toEqual('preset-value');
         expect(Page.mock.calls[0][0].name2).toEqual('newest-value');
     });
-    test('preset Page with option then override same key', () => {
+    test('when preset with option then override same key', () => {
         const NewPage = presets.Page({
             name: 'preset-value'
         });
@@ -81,13 +82,13 @@ describe('presets Page', () => {
         });
         expect(Page.mock.calls[0][0].name).toEqual('newest-value');
     });
-    test('preset Page with behavior then concat behavior', () => {
+    test('when preset with behavior then concat behavior', () => {
         const mockBehavior = Behavior({});
         const NewPage = presets.Page(mockBehavior);
         NewPage();
         expect(Page.mock.calls[0][0].behaviors).toStrictEqual([mockBehavior]);
     });
-    test('preset Page with factory then merge different keys', () => {
+    test('when preset with factory then merge different keys', () => {
         const aOldPageFactory = presets.Page({
             presetName: 'old-factory-value'
         });
@@ -98,7 +99,7 @@ describe('presets Page', () => {
         expect(Page.mock.calls[0][0].presetName).toEqual('old-factory-value');
         expect(Page.mock.calls[0][0].newName).toEqual('new-value');
     });
-    test('preset Page with factory then override same keys', () => {
+    test('when preset with factory then override same keys', () => {
         const aOldPageFactory = presets.Page({
             presetName: 'old-factory-value',
             sameName: 'same-old-factory-value'
@@ -110,7 +111,7 @@ describe('presets Page', () => {
         });
         expect(Page.mock.calls[0][0].sameName).toEqual('same-new-value');
     });
-    test('preset Page with factory then merge option.data', () => {
+    test('when preset with factory then merge option.data', () => {
         const aOldPageFactory = presets.Page({
             data: {
                 presetName: 'old-factory-value',
