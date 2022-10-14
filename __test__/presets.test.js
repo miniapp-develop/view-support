@@ -88,6 +88,30 @@ describe('presets Page', () => {
         expect(Page.mock.calls[0][0].presetName2).toEqual('preset-value-2');
         expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
     });
+    test('when preset with multi options then override same keys', () => {
+        const option1 = {
+            presetName1: 'option1-value-1',
+            sameName1: 'option1-same-name-1',
+            sameName3: 'option1-same-name-3'
+        };
+        const option2 = {
+            presetName2: 'option2-value-2',
+            sameName1: 'option2-same-name-2',
+            sameName2: 'option2-same-name-2'
+        };
+        const NewPage = presets.Page(option1, option2);
+        NewPage({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
+        expect(Page.mock.calls[0][0].presetName1).toEqual('option1-value-1');
+        expect(Page.mock.calls[0][0].presetName2).toEqual('option2-value-2');
+        expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
+        expect(Page.mock.calls[0][0].sameName1).toEqual('option2-same-name-2');
+        expect(Page.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
+        expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+    });
     test('when preset with option then override same key', () => {
         const NewPage = presets.Page({
             name: 'preset-value'
