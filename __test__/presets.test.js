@@ -73,6 +73,21 @@ describe('presets Page', () => {
         expect(Page.mock.calls[0][0].name1).toEqual('preset-value');
         expect(Page.mock.calls[0][0].name2).toEqual('newest-value');
     });
+    test('when preset with options then merge different keys', () => {
+        const option1 = {
+            presetName1: 'preset-value-1'
+        };
+        const option2 = {
+            presetName2: 'preset-value-2'
+        };
+        const NewPage = presets.Page(option1, option2);
+        NewPage({
+            newName: 'newest-value'
+        });
+        expect(Page.mock.calls[0][0].presetName1).toEqual('preset-value-1');
+        expect(Page.mock.calls[0][0].presetName2).toEqual('preset-value-2');
+        expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
+    });
     test('when preset with option then override same key', () => {
         const NewPage = presets.Page({
             name: 'preset-value'
