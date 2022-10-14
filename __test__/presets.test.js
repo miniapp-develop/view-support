@@ -88,6 +88,15 @@ describe('presets Page', () => {
         expect(Page.mock.calls[0][0].presetName2).toEqual('preset-value-2');
         expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
     });
+    test('when preset with option then override same key', () => {
+        const NewPage = presets.Page({
+            name: 'preset-value'
+        });
+        NewPage({
+            name: 'newest-value'
+        });
+        expect(Page.mock.calls[0][0].name).toEqual('newest-value');
+    });
     test('when preset with multi options then override same keys', () => {
         const option1 = {
             presetName1: 'option1-value-1',
@@ -112,20 +121,19 @@ describe('presets Page', () => {
         expect(Page.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
         expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
     });
-    test('when preset with option then override same key', () => {
-        const NewPage = presets.Page({
-            name: 'preset-value'
-        });
-        NewPage({
-            name: 'newest-value'
-        });
-        expect(Page.mock.calls[0][0].name).toEqual('newest-value');
-    });
     test('when preset with behavior then concat behavior', () => {
         const mockBehavior = Behavior({});
         const NewPage = presets.Page(mockBehavior);
         NewPage();
         expect(Page.mock.calls[0][0].behaviors).toStrictEqual([mockBehavior]);
+    });
+    test('when preset with multi behaviors then concat behaviors', () => {
+        const behavior1 = Behavior({});
+        const behavior2 = Behavior({});
+        const behavior3 = Behavior({});
+        const NewPage = presets.Page(behavior1, behavior2, behavior3);
+        NewPage();
+        expect(Page.mock.calls[0][0].behaviors).toStrictEqual([behavior1, behavior2, behavior3]);
     });
     test('when preset with factory then merge different keys', () => {
         const aOldPageFactory = presets.Page({
