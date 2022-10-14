@@ -146,6 +146,30 @@ describe('presets Page', () => {
         expect(Page.mock.calls[0][0].presetName).toEqual('old-factory-value');
         expect(Page.mock.calls[0][0].newName).toEqual('new-value');
     });
+    // test('when preset with multi factories then merge different keys', () => {
+    //     const factory1 = presets.Page({
+    //         presetName1: 'factory1-value-1',
+    //         sameName1: 'factory1-same-name-1',
+    //         sameName3: 'factory1-same-name-3'
+    //     });
+    //     const factory2 = presets.Page({
+    //         presetName2: 'factory2-value-2',
+    //         sameName1: 'factory2-same-name-2',
+    //         sameName2: 'factory2-same-name-2'
+    //     });
+    //     const NewPage = presets.Page(factory1, factory2);
+    //     NewPage({
+    //         newName: 'newest-value',
+    //         sameName2: 'newest-same-name-2',
+    //         sameName3: 'newest-same-name-3'
+    //     });
+    //     expect(Page.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
+    //     expect(Page.mock.calls[0][0].presetName2).toEqual('factory2-value-2');
+    //     expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
+    //     expect(Page.mock.calls[0][0].sameName1).toEqual('factory2-same-name-2');
+    //     expect(Page.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
+    //     expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+    // });
     test('when preset with factory then override same keys', () => {
         const aOldPageFactory = presets.Page({
             presetName: 'old-factory-value',
