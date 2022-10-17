@@ -5,22 +5,22 @@ describe('presets Component', () => {
         global.Component = jest.fn();
     });
     test('when preset with option then merge keys', () => {
-        const NewPage = presets.Component({
+        const NewComponent = presets.Component({
             name1: 'preset-value'
         });
-        NewPage({
+        NewComponent({
             name2: 'newest-value'
         });
         expect(Component.mock.calls[0][0].name1).toEqual('preset-value');
         expect(Component.mock.calls[0][0].name2).toEqual('newest-value');
     });
     test('when preset with option then merge option.data', () => {
-        const NewPage = presets.Component({
+        const NewComponent = presets.Component({
             data: {
                 name1: 'preset-value'
             }
         });
-        NewPage({
+        NewComponent({
             data: {
                 name2: 'newest-value'
             }
@@ -31,12 +31,12 @@ describe('presets Component', () => {
         });
     });
     test('when preset with option then merge option.options', () => {
-        const NewPage = presets.Component({
+        const NewComponent = presets.Component({
             options: {
                 name1: 'preset-value'
             }
         });
-        NewPage({
+        NewComponent({
             options: {
                 name2: 'newest-value'
             }
@@ -47,25 +47,25 @@ describe('presets Component', () => {
         });
     });
     test('when preset with option then concat option.behaviors', () => {
-        const NewPage = presets.Component({
+        const NewComponent = presets.Component({
             behaviors: [1]
         });
-        NewPage({
+        NewComponent({
             behaviors: [2]
         });
         expect(Component.mock.calls[0][0].behaviors).toStrictEqual([1, 2]);
     });
     test('when preset with option then concat option.externalClasses', () => {
-        const NewPage = presets.Component({
+        const NewComponent = presets.Component({
             externalClasses: [1]
         });
-        NewPage({
+        NewComponent({
             externalClasses: [2]
         });
         expect(Component.mock.calls[0][0].externalClasses).toStrictEqual([1, 2]);
     });
     test('when preset with option then merge option.properties', () => {
-        const NewPage = presets.Component({
+        const NewComponent = presets.Component({
             properties: {
                 name1: {
                     type: Array,
@@ -77,7 +77,7 @@ describe('presets Component', () => {
                 }
             }
         });
-        NewPage({
+        NewComponent({
             properties: {
                 name2: {
                     type: Array,
@@ -109,13 +109,13 @@ describe('presets Component', () => {
         const observer2 = jest.fn();
         const observer3 = jest.fn();
         const observer4 = jest.fn();
-        const NewPage = presets.Component({
+        const NewComponent = presets.Component({
             observers: {
                 'name1': observer1,
                 'name2': observer2,
             }
         });
-        NewPage({
+        NewComponent({
             observers: {
                 'name2': observer3,
                 'name3': observer4,
@@ -128,7 +128,7 @@ describe('presets Component', () => {
         });
     });
     test('when preset with option then merge option.relations', () => {
-        const NewPage = presets.Component({
+        const NewComponent = presets.Component({
             relations: {
                 "name1": {
                     type: "parent_a",
@@ -140,7 +140,7 @@ describe('presets Component', () => {
                 }
             }
         });
-        NewPage({
+        NewComponent({
             relations: {
                 "name2": {
                     type: "parent_c",
@@ -178,8 +178,8 @@ describe('presets Component', () => {
             sameName1: 'option2-same-name-2',
             sameName2: 'option2-same-name-2'
         };
-        const NewPage = presets.Component(option1, option2);
-        NewPage({
+        const NewComponent = presets.Component(option1, option2);
+        NewComponent({
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
@@ -196,8 +196,8 @@ describe('presets Component', () => {
             presetName: 'old-factory-value',
             sameName: 'same-old-factory-value'
         });
-        const NewPage = presets.Component(aOldPageFactory);
-        NewPage({
+        const NewComponent = presets.Component(aOldPageFactory);
+        NewComponent({
             newName: 'new-value',
             sameName: 'same-new-value'
         });
@@ -214,8 +214,8 @@ describe('presets Component', () => {
             sameName1: 'factory2-same-name-2',
             sameName2: 'factory2-same-name-2'
         });
-        const NewPage = presets.Component(factory1, factory2);
-        NewPage({
+        const NewComponent = presets.Component(factory1, factory2);
+        NewComponent({
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
@@ -234,8 +234,8 @@ describe('presets Component', () => {
                 sameName: 'same-old-factory-value'
             }
         });
-        const NewPage = presets.Component(aOldPageFactory);
-        NewPage({
+        const NewComponent = presets.Component(aOldPageFactory);
+        NewComponent({
             data: {
                 newName: 'new-value',
                 sameName: 'same-new-value'
@@ -269,8 +269,8 @@ describe('presets Component', () => {
                 sameName2: 'factory3-same-name-3'
             }
         });
-        const NewPage = presets.Component(factory1, factory2, factory3);
-        NewPage({
+        const NewComponent = presets.Component(factory1, factory2, factory3);
+        NewComponent({
             data: {
                 newName: 'newest-value',
                 sameName2: 'newest-same-name-2',
@@ -298,8 +298,8 @@ describe('presets Component', () => {
             sameName1: 'factory3-same-name-3',
             sameName2: 'factory3-same-name-3'
         });
-        const NewPage = presets.Component(option1, option2);
-        NewPage({
+        const NewComponent = presets.Component(option1, option2);
+        NewComponent({
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
@@ -311,5 +311,31 @@ describe('presets Component', () => {
         expect(Component.mock.calls[0][0].sameName1).toEqual('factory3-same-name-3');
         expect(Component.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
         expect(Component.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+    });
+    test('when constructor is provided then apply constructor', () => {
+        const option1 = {
+            presetName1: 'factory1-value-1',
+            sameName1: 'factory1-same-name-1',
+            sameName3: 'factory1-same-name-3'
+        };
+        const option2 = presets.Component({
+            presetName3: 'factory3-value-3',
+            sameName1: 'factory3-same-name-3',
+            sameName2: 'factory3-same-name-3'
+        });
+        const NewComponent = presets.Component(option1, option2);
+        const constructor = jest.fn();
+        NewComponent({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        }, constructor);
+
+        expect(constructor.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
+        expect(constructor.mock.calls[0][0].presetName3).toEqual('factory3-value-3');
+        expect(constructor.mock.calls[0][0].newName).toEqual('newest-value');
+        expect(constructor.mock.calls[0][0].sameName1).toEqual('factory3-same-name-3');
+        expect(constructor.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
+        expect(constructor.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
     });
 });
