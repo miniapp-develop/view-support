@@ -11,9 +11,9 @@
 npm install @mini-dev/view-support
 ```
 
-## Usage
-
 ### 创建预设构造方法
+
+小程序只提供了基于 Behavior 的复用机制，因此，本库提供了基于 option 和 Function 的复用方式。
 
 1、 创建预设组件
 
