@@ -55,17 +55,117 @@ describe('presets Component', () => {
         });
         expect(Component.mock.calls[0][0].behaviors).toStrictEqual([1, 2]);
     });
-    test('when preset with a single option then merge keys', () => {
+    test('when preset with option then concat option.externalClasses', () => {
         const NewPage = presets.Component({
-            name: 'preset-value',
-            name1: 'preset-value'
+            externalClasses: [1]
         });
         NewPage({
-            name: 'newest-value',
-            name2: 'newest-value'
+            externalClasses: [2]
         });
-        expect(Component.mock.calls[0][0].name1).toEqual('preset-value');
-        expect(Component.mock.calls[0][0].name2).toEqual('newest-value');
+        expect(Component.mock.calls[0][0].externalClasses).toStrictEqual([1, 2]);
+    });
+    test('when preset with option then merge option.properties', () => {
+        const NewPage = presets.Component({
+            properties: {
+                name1: {
+                    type: Array,
+                    value: []
+                },
+                name2: {
+                    type: String,
+                    value: ''
+                }
+            }
+        });
+        NewPage({
+            properties: {
+                name2: {
+                    type: Array,
+                    value: []
+                },
+                name3: {
+                    type: Array,
+                    value: []
+                }
+            }
+        });
+        expect(Component.mock.calls[0][0].properties).toStrictEqual({
+            name1: {
+                type: Array,
+                value: []
+            },
+            name2: {
+                type: Array,
+                value: []
+            },
+            name3: {
+                type: Array,
+                value: []
+            }
+        });
+    });
+    test('when preset with option then merge option.observers', () => {
+        const observer1 = jest.fn();
+        const observer2 = jest.fn();
+        const observer3 = jest.fn();
+        const observer4 = jest.fn();
+        const NewPage = presets.Component({
+            observers: {
+                'name1': observer1,
+                'name2': observer2,
+            }
+        });
+        NewPage({
+            observers: {
+                'name2': observer3,
+                'name3': observer4,
+            }
+        });
+        expect(Component.mock.calls[0][0].observers).toStrictEqual({
+            'name1': observer1,
+            'name2': observer3,
+            'name3': observer4,
+        });
+    });
+    test('when preset with option then merge option.relations', () => {
+        const NewPage = presets.Component({
+            relations: {
+                "name1": {
+                    type: "parent_a",
+                    target: "child_a",
+                },
+                "name2": {
+                    type: "parent_b",
+                    target: "child_b",
+                }
+            }
+        });
+        NewPage({
+            relations: {
+                "name2": {
+                    type: "parent_c",
+                    target: "child_c",
+                },
+                "name3": {
+                    type: "parent_d",
+                    target: "child_d",
+                }
+            }
+        });
+        expect(Component.mock.calls[0][0].relations).toStrictEqual({
+            "name1": {
+                type: "parent_a",
+                target: "child_a",
+            },
+            "name2": {
+                type: "parent_c",
+                target: "child_c",
+            },
+            "name3": {
+                type: "parent_d",
+                target: "child_d",
+            }
+        });
     });
     test('when preset with multi options then merge keys', () => {
         const option1 = {
