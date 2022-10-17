@@ -195,31 +195,29 @@ describe('presets Page', () => {
             sameName3: 'newest-same-name-3'
         });
     });
-    // test('when preset with option&factory then merge keys', () => {
-    //     const option1 = {
-    //         presetName1: 'factory1-value-1',
-    //         sameName1: 'factory1-same-name-1',
-    //         sameName3: 'factory1-same-name-3'
-    //     };
-    //     const option2 = Behavior({});
-    //     const option3 = presets.Page({
-    //         presetName3: 'factory3-value-3',
-    //         sameName1: 'factory3-same-name-3',
-    //         sameName2: 'factory3-same-name-3'
-    //     });
-    //     const NewPage = presets.Page(option1, option2, option3);
-    //     NewPage({
-    //         newName: 'newest-value',
-    //         sameName2: 'newest-same-name-2',
-    //         sameName3: 'newest-same-name-3'
-    //     });
-    //
-    //     expect(Page.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
-    //     expect(Page.mock.calls[0][0].presetName3).toEqual('factory3-value-3');
-    //     expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
-    //     expect(Page.mock.calls[0][0].sameName1).toEqual('factory3-same-name-3');
-    //     expect(Page.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-    //     expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
-    //     expect(Page.mock.calls[0][0].behaviors).toEqual([option2]);
-    // });
+    test('when preset with option&factory then merge keys', () => {
+        const option1 = {
+            presetName1: 'factory1-value-1',
+            sameName1: 'factory1-same-name-1',
+            sameName3: 'factory1-same-name-3'
+        };
+        const option2 = presets.Page({
+            presetName3: 'factory3-value-3',
+            sameName1: 'factory3-same-name-3',
+            sameName2: 'factory3-same-name-3'
+        });
+        const NewPage = presets.Page(option1, option2);
+        NewPage({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
+
+        expect(Page.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
+        expect(Page.mock.calls[0][0].presetName3).toEqual('factory3-value-3');
+        expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
+        expect(Page.mock.calls[0][0].sameName1).toEqual('factory3-same-name-3');
+        expect(Page.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
+        expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+    });
 });
