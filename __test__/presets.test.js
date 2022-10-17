@@ -202,4 +202,44 @@ describe('presets Page', () => {
             sameName: 'same-new-value'
         });
     });
+    test('when preset with multi factories then merge option.data', () => {
+        const factory1 = presets.Page({
+            data: {
+                presetName1: 'factory1-value-1',
+                sameName1: 'factory1-same-name-1',
+                sameName3: 'factory1-same-name-3'
+            }
+        });
+        const factory2 = presets.Page({
+            data: {
+                presetName2: 'factory2-value-2',
+                sameName1: 'factory2-same-name-2',
+                sameName2: 'factory2-same-name-2'
+            }
+        });
+        const factory3 = presets.Page({
+            data: {
+                presetName3: 'factory3-value-3',
+                sameName1: 'factory3-same-name-3',
+                sameName2: 'factory3-same-name-3'
+            }
+        });
+        const NewPage = presets.Page(factory1, factory2, factory3);
+        NewPage({
+            data: {
+                newName: 'newest-value',
+                sameName2: 'newest-same-name-2',
+                sameName3: 'newest-same-name-3'
+            }
+        });
+        expect(Page.mock.calls[0][0].data).toStrictEqual({
+            presetName1: 'factory1-value-1',
+            presetName2: 'factory2-value-2',
+            presetName3: 'factory3-value-3',
+            newName: 'newest-value',
+            sameName1: 'factory3-same-name-3',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
+    });
 });
