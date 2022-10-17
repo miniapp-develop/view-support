@@ -1,12 +1,10 @@
-const {MiniPage} = require("../../../lib/index");
+const CustomPage = require("../CustomPage");
+const DemoPage = require("../../DemoPage");
 
-MiniPage({
+CustomPage({
     data: {
-        miniIgnore: 'this is view data',
-        _miniIgnore: 'this is pure data'
+        dataFromPageOption: 'dataFromPageOption'
     },
     onLoad(query) {
-        console.log(this.data.miniIgnore);
-        console.log(this.data._miniIgnore);
     }
-});
+}, DemoPage);

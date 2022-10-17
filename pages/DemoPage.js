@@ -9,7 +9,8 @@ function DemoPage(option) {
         },
         data: {
             ...option.data,
-            demo: 'demo-page'
+            demo: 'demo-page',
+            dataFromDemoPage: 'dataFromDemoPage'
         }
     });
 }

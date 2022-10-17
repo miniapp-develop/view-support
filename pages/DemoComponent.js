@@ -1,5 +1,5 @@
 function DemoComponent(option) {
-    Component({
+    const appliedOption = {
         ...option,
         externalClasses: ['demo-class', ...(option.externalClasses || [])],
         properties: {
@@ -14,7 +14,8 @@ function DemoComponent(option) {
                 console.log('this is demo');
             }
         }
-    });
+    };
+    Component(appliedOption);
 }
 
 module.exports = DemoComponent;
