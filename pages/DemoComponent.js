@@ -4,9 +4,9 @@ function DemoComponent(option) {
         externalClasses: ['demo-class', ...(option.externalClasses || [])],
         properties: {
             ...option.properties,
-            demo: {
+            demoName: {
                 type: String,
-                value: 'demo'
+                value: 'defaultDemoName'
             }
         },
         methods: {

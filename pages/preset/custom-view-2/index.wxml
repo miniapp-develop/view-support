@@ -1,3 +1,5 @@
-<view class="mini-view mini-class custom-class">
-    custom-view-2:{{miniName}}
+<view class="mini-view mini-class">
+    custom-view-2
+    <view>customName:{{customName}}</view>
+    <view>demoName:{{demoName}}</view>
 </view>
