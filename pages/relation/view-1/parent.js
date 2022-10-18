@@ -1,5 +1,15 @@
-const {MiniComponent} = require("../../../lib/index");
+const DemoComponent = require("../../DemoComponent");
 
 import {parent} from './pc';
 
-parent({}, MiniComponent);
+parent({
+    methods: {
+        onRelationChanged(event, child) {
+            if (event === 'linked') {
+                child.setData({
+                    text: event
+                });
+            }
+        }
+    }
+}, DemoComponent);

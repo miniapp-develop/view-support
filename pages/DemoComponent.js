@@ -1,6 +1,7 @@
 function DemoComponent(option) {
     const appliedOption = {
         ...option,
+        behaviors: [...option.behaviors],
         externalClasses: ['demo-class', ...(option.externalClasses || [])],
         properties: {
             ...option.properties,
@@ -9,10 +10,14 @@ function DemoComponent(option) {
                 value: 'defaultDemoName'
             }
         },
+        relations: {
+            ...option.relations
+        },
         methods: {
             inspectDemo() {
                 console.log('this is demo');
-            }
+            },
+            ...option.methods
         }
     };
     Component(appliedOption);

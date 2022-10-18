@@ -1,2 +1,2 @@
-const {connectParentChildren} = require("../../../lib/index");
-export const {parent, child} = connectParentChildren({debug: true});
+const {createParentChild} = require("../../../lib/relations");
+export const {parent, child} = createParentChild();

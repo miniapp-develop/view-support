@@ -1,4 +1,3 @@
 <view class="v-child {{active ? 'active':''}}">
-    <text>this is child:{{childIndex}}:{{active}}</text>
-    <text bind:tap="onTapCancel" class="v-child-action">取消</text>
+    <text>this is child:{{text}}</text>
 </view>
