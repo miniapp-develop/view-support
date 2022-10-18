@@ -3,8 +3,6 @@
     "parent-view": "../view-1/parent",
     "child-view": "../view-1/child",
     "parent-view-2": "../view-2/parent",
-    "child-view-2": "../view-2/child",
-    "parent-view-3": "../view-3/parent",
-    "child-view-3": "../view-3/child"
+    "child-view-2": "../view-2/child"
   }
 }

@@ -1,3 +1,0 @@
-<view class="v-child {{active ? 'active':''}}">
-    <text>this is child:{{childIndex}}:{{active}}</text>
-</view>

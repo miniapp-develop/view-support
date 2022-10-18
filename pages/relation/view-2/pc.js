@@ -1,13 +1,11 @@
-const {connectParentChildren, createPresetComponent, MiniComponent} = require("../../../lib/index");
-export const {parent, child} = connectParentChildren({debug: true});
+const {Component} = require("../../../lib/presets");
+const {createParentChild} = require("../../../lib/relations");
+const DemoComponent = require("../../DemoComponent");
+export const {parent, child} = createParentChild({debug: true});
 
-const Parent = createPresetComponent({
+export const ParentView = Component({
     options: {virtualHost: true}
-});
-
-export const ParentView = function (option, f = MiniComponent) {
-    Parent(option, parent, f);
-}
+}, DemoComponent, parent);
 
 const ChildBehavior = Behavior({
     properties: {
@@ -21,24 +19,15 @@ const ChildBehavior = Behavior({
         }
     },
     methods: {
-        onMiniChanged(newValue) {
-            const childIndex = this.getMiniIndex();
-            this.setData({
-                childIndex: childIndex,
-                active: newValue === childIndex
-            });
+        onRelationChanged(event, target) {
         }
     }
 });
 
-const Child = createPresetComponent({
+export const ChildView = Component({
     options: {virtualHost: true},
     data: {
         active: false
     },
     behaviors: [ChildBehavior]
-});
-
-export const ChildView = function (option, f = MiniComponent) {
-    Child(option, child, f);
-}
+}, DemoComponent, child);
