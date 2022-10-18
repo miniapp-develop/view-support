@@ -1,7 +1,7 @@
 const merges = require('../lib/merges');
 
 describe('mergePageOption', () => {
-    test('when presetOption and inputOption are all null then ', () => {
+    test('when presetOption and inputOption are all null then get empty', () => {
         const presetOption = null;
         const inputOption = null;
         const mergedOption = merges.mergePageOption(presetOption, inputOption);
@@ -12,7 +12,7 @@ describe('mergePageOption', () => {
 });
 
 describe('mergeComponentOption', () => {
-    test('simple check', () => {
+    test('when presetOption and inputOption are all null then get empty', () => {
         const presetOption = null;
         const inputOption = null;
         const mergedOption = merges.mergeComponentOption(presetOption, inputOption);
