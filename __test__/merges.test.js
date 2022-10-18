@@ -6,8 +6,8 @@ describe('mergePageOption', () => {
         const inputOption = null;
         const mergedOption = merges.mergePageOption(presetOption, inputOption);
         expect(mergedOption.options).toStrictEqual({});
-        expect(mergedOption.behaviors).toStrictEqual([]);
         expect(mergedOption.data).toStrictEqual({});
+        expect(mergedOption.behaviors).toStrictEqual([]);
     });
 });
 
