@@ -1,16 +1,17 @@
 const relation = require('../lib/relations');
 
 global.Behavior = jest.fn();
+global.Component = jest.fn();
 
 describe('relation', () => {
     test('simple check createParentChild', () => {
         const {parent, child} = relation.createParentChild();
-        expect(parent).not.toBeNull();
-        expect(child).not.toBeNull();
+        expect(parent).toBeInstanceOf(Function);
+        expect(child).toBeInstanceOf(Function);
     });
     test('simple check createAncestorDescendant', () => {
         const {ancestor, descendant} = relation.createAncestorDescendant();
-        expect(ancestor).not.toBeNull();
-        expect(descendant).not.toBeNull();
+        expect(ancestor).toBeInstanceOf(Function);
+        expect(descendant).toBeInstanceOf(Function);
     });
 });
