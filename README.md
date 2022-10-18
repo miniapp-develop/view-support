@@ -15,6 +15,28 @@ npm install @mini-dev/view-support
 
 小程序只提供了基于 Behavior 的复用机制，因此，本库提供了基于 option 和 Function 的复用方式。
 
+重要说明：由于 Behavior 本身有自己的优先级定义，因此，对于 Behavior 自身已经支持的属性，
+建议使用 Behavior 来定义，只有 Behavior 不支持的属性，才考虑使用 Option 的方式进行复用。
+
+Behavior 自身已经支持的属性包括：
+
+    properties
+    data
+    observers
+    methods
+    behaviors
+    created
+    attached
+    ready
+    moved
+    detached
+    relations
+    lifetimes
+    pageLifetimes
+    definitionFilter
+
+更新更详细的文档参见官方文档：[https://developers.weixin.qq.com/miniprogram/dev/reference/api/Behavior.html](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Behavior.html)
+
 1、 创建预设组件
 
 ```javascript
