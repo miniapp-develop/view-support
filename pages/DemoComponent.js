@@ -1,23 +1,23 @@
 function DemoComponent(option) {
     const appliedOption = {
         ...option,
-        behaviors: [...option.behaviors],
+        behaviors: [...(option.behaviors || [])],
         externalClasses: ['demo-class', ...(option.externalClasses || [])],
         properties: {
-            ...option.properties,
+            ...(option.properties || {}),
             demoName: {
                 type: String,
                 value: 'defaultDemoName'
             }
         },
         relations: {
-            ...option.relations
+            ...(option.relations || {})
         },
         methods: {
             inspectDemo() {
                 console.log('this is demo');
             },
-            ...option.methods
+            ...(option.methods || {})
         }
     };
     Component(appliedOption);

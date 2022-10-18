@@ -1,25 +1,26 @@
 const {Component} = require("../../../lib/presets");
 const {createParentChild} = require("../../../lib/relations");
-const DemoComponent = require("../../DemoComponent");
 export const {parent, child} = createParentChild({debug: true});
 
 export const ParentView = Component({
-    options: {virtualHost: true}
-}, DemoComponent, parent);
+    options: {virtualHost: true},
+    methods: {
+        onRelationChanged(event, target) {
+            console.log('ParentView', event, target);
+        }
+    }
+}, parent);
 
 const ChildBehavior = Behavior({
     properties: {
         state: {
             type: String,
             value: ''
-        },
-        mode: {
-            type: String,
-            value: 'normal'
         }
     },
     methods: {
         onRelationChanged(event, target) {
+            console.log('ChildBehavior', event, target);
         }
     }
 });
@@ -30,4 +31,4 @@ export const ChildView = Component({
         active: false
     },
     behaviors: [ChildBehavior]
-}, DemoComponent, child);
+}, child);

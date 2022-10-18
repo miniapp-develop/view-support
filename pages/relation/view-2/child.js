@@ -1,3 +1,5 @@
 import {ChildView} from './pc';
 
-ChildView();
+const DemoComponent = require("../../DemoComponent");
+
+ChildView({}, DemoComponent);

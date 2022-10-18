@@ -1,3 +1,5 @@
 import {ParentView} from './pc';
 
-ParentView();
+const DemoComponent = require("../../DemoComponent");
+
+ParentView({}, DemoComponent);
