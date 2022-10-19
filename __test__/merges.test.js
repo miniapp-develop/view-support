@@ -184,11 +184,11 @@ describe('mergeComponentOption', () => {
         const inputOption = null;
         const mergedOption = merges.mergeComponentOption(presetOption, inputOption);
         expect(mergedOption.options).toStrictEqual({});
-        expect(mergedOption.behaviors).toStrictEqual([]);
-        expect(mergedOption.data).toStrictEqual({});
         expect(mergedOption.externalClasses).toStrictEqual([]);
-        expect(mergedOption.properties).toStrictEqual({});
-        expect(mergedOption.observers).toStrictEqual({});
-        expect(mergedOption.relations).toStrictEqual({});
+        expect(mergedOption.behaviors).toStrictEqual([]);
+        expect(mergedOption.data).toBeUndefined();
+        expect(mergedOption.properties).toBeUndefined();
+        expect(mergedOption.observers).toBeUndefined();
+        expect(mergedOption.relations).toBeUndefined();
     });
 });
