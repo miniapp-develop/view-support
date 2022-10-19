@@ -1,7 +1,14 @@
+const be = require('../DemoBehavior');
+
 Page({
+    data: {
+        __name__: 'index'
+    },
+    behaviors: [be],
     onLoad(query) {
     },
     onTap(e) {
+        this.log();
         const name = e.currentTarget.dataset.name;
         if (name === 'preset') {
             wx.navigateTo({
