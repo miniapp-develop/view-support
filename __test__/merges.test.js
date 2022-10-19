@@ -47,7 +47,6 @@ describe('mergePageOption', () => {
         };
         const inputOption = null;
         const mergedOption = merges.mergePageOption(presetOption, inputOption);
-        expect(global.Behavior).toBeCalled();
         expect(mergedOption.options).toStrictEqual({
             'preset-options-key': 'preset-options-value'
         });
@@ -97,7 +96,6 @@ describe('mergePageOption', () => {
             __attr__: 'a-string'
         };
         const mergedOption = merges.mergePageOption(presetOption, inputOption);
-        expect(global.Behavior).toBeCalled();
         expect(mergedOption.options).toStrictEqual({
             'preset-options-key': 'preset-options-value'
         });
