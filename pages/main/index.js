@@ -6,6 +6,26 @@ Page({
     },
     behaviors: [be],
     onLoad(query) {
+        console.log('Page.onLoad');
+    },
+    onShow() {
+        console.log('Page.onShow');
+    },
+    onReady() {
+        console.log('Page.onReady');
+    },
+    onHide() {
+        console.log('Page.onHide');
+    },
+    onUnload() {
+        console.log('Page.onUnload');
+    },
+    onResize() {
+        console.log('Page.onResize');
+    },
+    log() {
+        console.log('Page.log', this.data);
+        this.__log__();
     },
     onTap(e) {
         this.log();

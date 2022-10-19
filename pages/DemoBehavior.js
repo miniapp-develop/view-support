@@ -54,6 +54,9 @@ const b = Behavior({
     methods: {
         log() {
             console.log('Behavior.methods.log', this.data);
+        },
+        __log__() {
+            console.log('Behavior.methods.__log__', this.data);
         }
     }
 });
