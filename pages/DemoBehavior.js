@@ -22,13 +22,13 @@ const b = Behavior({
     },
     pageLifetimes: {
         show() {
-            console.log('lifetimes.show');
+            console.log('pageLifetimes.show');
         },
         hide() {
-            console.log('lifetimes.hide');
+            console.log('pageLifetimes.hide');
         },
         resize(size) {
-            console.log('lifetimes.resize');
+            console.log('pageLifetimes.resize');
         }
     },
     lifetimes: {
