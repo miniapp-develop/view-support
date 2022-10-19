@@ -2,6 +2,9 @@ const b = Behavior({
     data: {
         BehaviorDataName: "BehaviorDataValue"
     },
+    definitionFilter(defFields) {
+        console.log('Behavior.definitionFilter', defFields);
+    },
     created() {
         console.log('Behavior.created');
     },

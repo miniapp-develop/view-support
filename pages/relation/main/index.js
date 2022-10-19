@@ -1,11 +1,14 @@
+const be = require('../../DemoBehavior');
 Page({
     data: {
+        __name__: 'relation',
         active: 't1',
         active2: 0,
         miniData3: {
             active: 0
         }
     },
+    behaviors: [be],
     onLoad() {
 
     },

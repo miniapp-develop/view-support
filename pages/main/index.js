@@ -2,7 +2,7 @@ const be = require('../DemoBehavior');
 
 Page({
     data: {
-        __name__: 'index'
+        __name__: 'main'
     },
     behaviors: [be],
     onLoad(query) {
