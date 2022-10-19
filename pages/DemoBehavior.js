@@ -52,6 +52,9 @@ const b = Behavior({
         }
     },
     methods: {
+        onLoad(query) {
+            console.log('Behavior.methods.onLoad', query);
+        },
         log() {
             console.log('Behavior.methods.log', this.data);
         },
