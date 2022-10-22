@@ -3,6 +3,7 @@ const presets = require('../lib/presets');
 describe('presets Component', () => {
     beforeEach(() => {
         global.Component = jest.fn();
+        global.Behavior = jest.fn().mockReturnValue('/bcdef');
     });
     test('when preset with option then merge keys', () => {
         const NewComponent = presets.Component({

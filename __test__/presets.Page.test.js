@@ -3,11 +3,7 @@ const presets = require('../lib/presets');
 describe('presets Page', () => {
     beforeEach(() => {
         global.Page = jest.fn();
-        global.Behavior = () => {
-            const fn = jest.fn();
-            fn.mockReturnValue('/a/bcdef')
-            return fn();
-        };
+        global.Behavior = jest.fn().mockReturnValue('/bcdef');
     });
     test('when preset with nothing then apply undefined', () => {
         const NewPage = presets.Page();
