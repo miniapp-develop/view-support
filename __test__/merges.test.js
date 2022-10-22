@@ -179,6 +179,9 @@ describe('mergePageOption', () => {
 });
 
 describe('mergeComponentOption', () => {
+    beforeEach(() => {
+        global.Behavior = jest.fn().mockReturnValue('/a/b/c/d/e/f');
+    });
     test('when presetOption and inputOption are all null then get empty', () => {
         const presetOption = null;
         const inputOption = null;
@@ -190,5 +193,190 @@ describe('mergeComponentOption', () => {
         expect(mergedOption.properties).toBeUndefined();
         expect(mergedOption.observers).toBeUndefined();
         expect(mergedOption.relations).toBeUndefined();
+        expect(mergedOption.methods).toBeUndefined();
+    });
+
+    test('when presetOption has BehaviorOwnProperty then wrap a new Behavior', () => {
+        const presetOption = {
+            __attr__: '__attr__.value',
+            options: {
+                'preset-options-key': 'preset-options-value'
+            },
+            externalClasses: ['class-1'],
+            data: {
+                'preset-data-key': 'preset-data-value'
+            },
+            properties: {},
+            behaviors: ['a'],
+            observers: {},
+            relations: {},
+            methods: {},
+            created() {
+            },
+            attached() {
+            },
+            ready() {
+            },
+            moved() {
+            },
+            detached() {
+            },
+            lifetimes() {
+            },
+            pageLifetimes() {
+            }
+        };
+        const inputOption = null;
+        const mergedOption = merges.mergeComponentOption(presetOption, inputOption);
+        expect(mergedOption.__attr__).toBe('__attr__.value');
+        expect(mergedOption.options).toStrictEqual({'preset-options-key': 'preset-options-value'});
+        expect(mergedOption.externalClasses).toStrictEqual(['class-1']);
+        expect(mergedOption.behaviors).toStrictEqual(['a', '/a/b/c/d/e/f']);
+
+        const theFirstBehaviorCall = global.Behavior.mock.calls[0];
+        expect(global.Behavior).toBeCalledTimes(1);
+        expect(theFirstBehaviorCall[0].data).toStrictEqual({'preset-data-key': 'preset-data-value'});
+        const expectedArray = expect.arrayContaining([
+            'data',
+            'properties',
+            'observers',
+            'relations',
+            'methods',
+            'created', 'attached', 'ready', 'moved', 'detached',
+            'lifetimes', 'pageLifetimes'
+        ]);
+        expect(Object.keys(theFirstBehaviorCall[0])).toEqual(expectedArray);
+        expect(expectedArray).toEqual(Object.keys(theFirstBehaviorCall[0]));
+    });
+    test('when inputOption has BehaviorOwnProperty then wrap a new Behavior', () => {
+        const presetOption = null;
+        const inputOption = {
+            __attr__: '__attr__.value',
+            options: {
+                'preset-options-key': 'preset-options-value'
+            },
+            externalClasses: ['class-1'],
+            data: {
+                'preset-data-key': 'preset-data-value'
+            },
+            properties: {},
+            behaviors: ['a'],
+            observers: {},
+            relations: {},
+            methods: {},
+            created() {
+            },
+            attached() {
+            },
+            ready() {
+            },
+            moved() {
+            },
+            detached() {
+            },
+            lifetimes() {
+            },
+            pageLifetimes() {
+            }
+        };
+        const mergedOption = merges.mergeComponentOption(presetOption, inputOption);
+        expect(mergedOption.__attr__).toBe('__attr__.value');
+        expect(mergedOption.options).toStrictEqual({'preset-options-key': 'preset-options-value'});
+        expect(mergedOption.externalClasses).toStrictEqual(['class-1']);
+        expect(mergedOption.behaviors).toStrictEqual(['a', '/a/b/c/d/e/f']);
+
+        expect(global.Behavior).toBeCalledTimes(1);
+        const theFirstBehaviorCall = global.Behavior.mock.calls[0];
+        expect(theFirstBehaviorCall[0].data).toStrictEqual({'preset-data-key': 'preset-data-value'});
+        const expectedArray = expect.arrayContaining([
+            'data',
+            'properties',
+            'observers',
+            'relations',
+            'methods',
+            'created', 'attached', 'ready', 'moved', 'detached',
+            'lifetimes', 'pageLifetimes'
+        ]);
+        expect(Object.keys(theFirstBehaviorCall[0])).toEqual(expectedArray);
+        expect(expectedArray).toEqual(Object.keys(theFirstBehaviorCall[0]));
+    });
+
+    test('when presetOption and inputOption all has BehaviorOwnProperty then wrap two new Behavior', () => {
+        const presetOption = {
+            __attr__1: '__attr__1.value',
+            options: {
+                'presetOption-options-key': 'presetOption-options-value'
+            },
+            externalClasses: ['class-1'],
+            data: {
+                'presetOption-data-key': 'presetOption-data-value'
+            },
+            properties: {},
+            behaviors: ['a'],
+            created() {
+            },
+            attached() {
+            },
+            ready() {
+            },
+            moved() {
+            },
+            detached() {
+            },
+            lifetimes() {
+            },
+            pageLifetimes() {
+            }
+        };
+
+        const inputOption = {
+            __attr__2: '__attr__2.value',
+            options: {
+                'inputOption-options-key': 'inputOption-options-value'
+            },
+            externalClasses: ['class-2'],
+            data: {
+                'inputOption-data-key': 'inputOption-data-value'
+            },
+            properties: {},
+            behaviors: ['b'],
+            observers: {},
+            relations: {},
+            methods: {}
+        };
+        const mergedOption = merges.mergeComponentOption(presetOption, inputOption);
+        expect(mergedOption.__attr__1).toBe('__attr__1.value');
+        expect(mergedOption.__attr__2).toBe('__attr__2.value');
+        expect(mergedOption.options).toStrictEqual({
+            'presetOption-options-key': 'presetOption-options-value',
+            'inputOption-options-key': 'inputOption-options-value'
+        });
+        expect(mergedOption.externalClasses).toStrictEqual(['class-1', "class-2"]);
+        expect(mergedOption.behaviors).toStrictEqual(['a', '/a/b/c/d/e/f', 'b', '/a/b/c/d/e/f']);
+
+        expect(global.Behavior).toBeCalledTimes(2);
+
+        const theFirstBehaviorCall = global.Behavior.mock.calls[0];
+        expect(theFirstBehaviorCall[0].data).toStrictEqual({'presetOption-data-key': 'presetOption-data-value'});
+        const expectedFirstArray = expect.arrayContaining([
+            'data',
+            'properties',
+            'created', 'attached', 'ready', 'moved', 'detached',
+            'lifetimes', 'pageLifetimes'
+        ]);
+        expect(Object.keys(theFirstBehaviorCall[0])).toEqual(expectedFirstArray);
+        expect(expectedFirstArray).toEqual(Object.keys(theFirstBehaviorCall[0]));
+
+        const theSecondBehaviorCall = global.Behavior.mock.calls[1];
+        expect(theSecondBehaviorCall[0].data).toStrictEqual({'inputOption-data-key': 'inputOption-data-value'});
+        const expectedSecondArray = expect.arrayContaining([
+            'data',
+            'properties',
+            'observers',
+            'relations',
+            'methods'
+        ]);
+        expect(Object.keys(theSecondBehaviorCall[0])).toEqual(expectedSecondArray);
+        expect(expectedSecondArray).toEqual(Object.keys(theSecondBehaviorCall[0]));
     });
 });
