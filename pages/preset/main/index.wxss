@@ -1,0 +1,12 @@
+.page-view {
+    padding: 1em;
+    color: chocolate;
+}
+
+.demo-class-1 {
+    color: red;
+}
+
+.demo-class-2 {
+    color: cadetblue;
+}

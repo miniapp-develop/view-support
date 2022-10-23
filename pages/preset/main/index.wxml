@@ -1,9 +1,9 @@
 <view class="main">
-    <custom-view-1 demo-class="mini-class-1"/>
-    <custom-view-2 demo-class="mini-class-2" custom-class="custom-class-2"/>
-    <view>
+    <view class="page-view">
         <view>dataFromPageOption:{{dataFromPageOption}}</view>
         <view>dataFromCustomPage:{{dataFromCustomPage}}</view>
         <view>dataFromDemoPage:{{dataFromDemoPage}}</view>
     </view>
+    <custom-view-1 demo-class="demo-class-1"/>
+    <custom-view-2 demo-class="demo-class-2" custom-class="custom-class-2"/>
 </view>

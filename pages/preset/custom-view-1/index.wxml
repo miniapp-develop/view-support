@@ -1,5 +1,5 @@
-<view class="mini-view mini-class">
-    custom-view-1
+<view class="mini-view demo-class custom-class" bind:tap="onTap">
+    <view>custom-view-1</view>
     <view>customName:{{customName}}</view>
     <view>demoName:{{demoName}}</view>
     <view>finalName:{{finalName}}</view>

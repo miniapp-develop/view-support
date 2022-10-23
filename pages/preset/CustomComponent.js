@@ -7,6 +7,13 @@ const CustomComponent = Component({
             type: String,
             value: 'defaultCustomName'
         }
+    },
+    methods: {
+        onTap(e) {
+            wx.showModal({
+                content: 'this is CustomComponent.onTap'
+            });
+        }
     }
 });
 
