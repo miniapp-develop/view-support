@@ -21,6 +21,9 @@ const ChildBehavior = Behavior({
     methods: {
         onRelationChanged(event, target) {
             console.log('ChildBehavior', event, target);
+            this.setData({
+                text: event
+            })
         }
     }
 });

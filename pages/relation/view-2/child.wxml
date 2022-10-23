@@ -1,4 +1,3 @@
 <view class="v-child {{active ? 'active':''}}">
-    <view>ChildView</view>
-    <view>{{text}}</view>
+    <text>ChildView：{{text}}</text>
 </view>
