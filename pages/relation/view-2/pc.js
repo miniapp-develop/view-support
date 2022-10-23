@@ -4,6 +4,20 @@ export const {parent, child} = createParentChild({debug: true});
 
 export const ParentView = Component({
     options: {virtualHost: true},
+    properties: {
+        current2: {
+            type: String,
+            value: ''
+        }
+    },
+    observers: {
+        current2(newValue) {
+            const children = this.getRelationChildren();
+            for (const child of children) {
+                child.onParentDataChanged(newValue);
+            }
+        }
+    },
     methods: {
         onRelationChanged(event, target) {
             console.log('ParentView', event, target);
@@ -13,10 +27,13 @@ export const ParentView = Component({
 
 const ChildBehavior = Behavior({
     properties: {
-        state: {
+        current: {
             type: String,
-            value: ''
+            value: null
         }
+    },
+    data: {
+        active: false
     },
     methods: {
         onRelationChanged(event, target) {
@@ -24,14 +41,16 @@ const ChildBehavior = Behavior({
             this.setData({
                 text: event
             })
+        },
+        onParentDataChanged(current) {
+            this.setData({
+                active: this.data.current === current
+            });
         }
     }
 });
 
 export const ChildView = Component({
     options: {virtualHost: true},
-    data: {
-        active: false
-    },
     behaviors: [ChildBehavior]
 }, child);
