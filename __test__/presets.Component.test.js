@@ -3,19 +3,21 @@ const presets = require('../lib/presets');
 describe('presets Component', () => {
     beforeEach(() => {
         global.Component = jest.fn();
-        global.Behavior = jest.fn().mockReturnValue('/bcdef');
+        global.Behavior = jest.fn().mockReturnValue('x');
     });
-    test('when preset with option then merge keys', () => {
+    test('when config-options have custom-properties then merge custom-properties', () => {
         const NewComponent = presets.Component({
             name1: 'preset-value'
         });
         NewComponent({
             name2: 'newest-value'
         });
-        expect(Component.mock.calls[0][0].name1).toEqual('preset-value');
-        expect(Component.mock.calls[0][0].name2).toEqual('newest-value');
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            name1: 'preset-value',
+            name2: 'newest-value'
+        });
     });
-    test('when preset with option then merge option.data', () => {
+    test('when config-option has data-property then wrap with Behavior', () => {
         const NewComponent = presets.Component({
             data: {
                 name1: 'preset-value'
@@ -26,12 +28,14 @@ describe('presets Component', () => {
                 name2: 'newest-value'
             }
         });
-        expect(Component.mock.calls[0][0].data).toStrictEqual({
-            name1: 'preset-value',
-            name2: 'newest-value'
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            data: {
+                name2: 'newest-value'
+            },
+            behaviors: ['x']
         });
     });
-    test('when preset with option then merge option.options', () => {
+    test('when config-option has options-property then merge option.options', () => {
         const NewComponent = presets.Component({
             options: {
                 name1: 'preset-value'
@@ -42,42 +46,46 @@ describe('presets Component', () => {
                 name2: 'newest-value'
             }
         });
-        expect(Component.mock.calls[0][0].options).toStrictEqual({
-            name1: 'preset-value',
-            name2: 'newest-value'
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            options: {
+                name1: 'preset-value',
+                name2: 'newest-value'
+            }
         });
     });
-    test('when preset with option then concat option.behaviors', () => {
+    test('when config-option has behaviors-property then concat option.behaviors', () => {
         const NewComponent = presets.Component({
             behaviors: [1]
         });
         NewComponent({
             behaviors: [2]
         });
-        expect(Component.mock.calls[0][0].behaviors).toStrictEqual([1, 2]);
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            behaviors: [1, 2]
+        });
     });
-    test('when preset with option then concat option.externalClasses', () => {
+    test('when config-option has externalClasses-property then concat option.externalClasses', () => {
         const NewComponent = presets.Component({
             externalClasses: [1]
         });
         NewComponent({
             externalClasses: [2]
         });
-        expect(Component.mock.calls[0][0].externalClasses).toStrictEqual([1, 2]);
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            externalClasses: [1, 2]
+        });
     });
-    test('when preset with option then merge option.properties', () => {
+    test('when config-option has behavior-property then wrap with Behavior', () => {
         const NewComponent = presets.Component({
             properties: {
                 name1: {
                     type: Array,
                     value: []
-                },
-                name2: {
-                    type: String,
-                    value: ''
                 }
             }
         });
+        const observer2 = jest.fn();
+        const observer3 = jest.fn();
         NewComponent({
             properties: {
                 name2: {
@@ -88,60 +96,11 @@ describe('presets Component', () => {
                     type: Array,
                     value: []
                 }
-            }
-        });
-        expect(Component.mock.calls[0][0].properties).toStrictEqual({
-            name1: {
-                type: Array,
-                value: []
             },
-            name2: {
-                type: Array,
-                value: []
-            },
-            name3: {
-                type: Array,
-                value: []
-            }
-        });
-    });
-    test('when preset with option then merge option.observers', () => {
-        const observer1 = jest.fn();
-        const observer2 = jest.fn();
-        const observer3 = jest.fn();
-        const observer4 = jest.fn();
-        const NewComponent = presets.Component({
             observers: {
-                'name1': observer1,
                 'name2': observer2,
-            }
-        });
-        NewComponent({
-            observers: {
-                'name2': observer3,
-                'name3': observer4,
-            }
-        });
-        expect(Component.mock.calls[0][0].observers).toStrictEqual({
-            'name1': observer1,
-            'name2': observer3,
-            'name3': observer4,
-        });
-    });
-    test('when preset with option then merge option.relations', () => {
-        const NewComponent = presets.Component({
-            relations: {
-                "name1": {
-                    type: "parent_a",
-                    target: "child_a",
-                },
-                "name2": {
-                    type: "parent_b",
-                    target: "child_b",
-                }
-            }
-        });
-        NewComponent({
+                'name3': observer3,
+            },
             relations: {
                 "name2": {
                     type: "parent_c",
@@ -153,22 +112,35 @@ describe('presets Component', () => {
                 }
             }
         });
-        expect(Component.mock.calls[0][0].relations).toStrictEqual({
-            "name1": {
-                type: "parent_a",
-                target: "child_a",
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            properties: {
+                name2: {
+                    type: Array,
+                    value: []
+                },
+                name3: {
+                    type: Array,
+                    value: []
+                }
             },
-            "name2": {
-                type: "parent_c",
-                target: "child_c",
+            observers: {
+                'name2': observer2,
+                'name3': observer3,
             },
-            "name3": {
-                type: "parent_d",
-                target: "child_d",
-            }
+            relations: {
+                "name2": {
+                    type: "parent_c",
+                    target: "child_c",
+                },
+                "name3": {
+                    type: "parent_d",
+                    target: "child_d",
+                }
+            },
+            behaviors: ['x']
         });
     });
-    test('when preset with multi options then merge keys', () => {
+    test('when config-options have custom-properties then merge custom-properties', () => {
         const option1 = {
             presetName1: 'option1-value-1',
             sameName1: 'option1-same-name-1',
@@ -185,14 +157,17 @@ describe('presets Component', () => {
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
         });
-        expect(Component.mock.calls[0][0].presetName1).toEqual('option1-value-1');
-        expect(Component.mock.calls[0][0].presetName2).toEqual('option2-value-2');
-        expect(Component.mock.calls[0][0].newName).toEqual('newest-value');
-        expect(Component.mock.calls[0][0].sameName1).toEqual('option2-same-name-2');
-        expect(Component.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-        expect(Component.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            presetName1: 'option1-value-1',
+            presetName2: 'option2-value-2',
+            sameName1: 'option2-same-name-2',
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
     });
-    test('when preset with a single factory then merge keys', () => {
+
+    test('when factory-option has custom-properties then merge custom-properties', () => {
         const aOldPageFactory = presets.Component({
             presetName: 'old-factory-value',
             sameName: 'same-old-factory-value'
@@ -202,9 +177,13 @@ describe('presets Component', () => {
             newName: 'new-value',
             sameName: 'same-new-value'
         });
-        expect(Component.mock.calls[0][0].sameName).toEqual('same-new-value');
+        expect(Component.mock.calls[0][0]).toEqual({
+            presetName: 'old-factory-value',
+            newName: 'new-value',
+            sameName: 'same-new-value'
+        });
     });
-    test('when preset with multi factories then merge keys', () => {
+    test('when factory-options have custom-properties then merge custom-properties', () => {
         const factory1 = presets.Component({
             presetName1: 'factory1-value-1',
             sameName1: 'factory1-same-name-1',
@@ -221,14 +200,16 @@ describe('presets Component', () => {
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
         });
-        expect(Component.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
-        expect(Component.mock.calls[0][0].presetName2).toEqual('factory2-value-2');
-        expect(Component.mock.calls[0][0].newName).toEqual('newest-value');
-        expect(Component.mock.calls[0][0].sameName1).toEqual('factory2-same-name-2');
-        expect(Component.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-        expect(Component.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            presetName1: 'factory1-value-1',
+            presetName2: 'factory2-value-2',
+            sameName1: 'factory2-same-name-2',
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
     });
-    test('when preset with factory then merge option.data', () => {
+    test('when factory-option has data-property then wrap with Behavior', () => {
         const aOldPageFactory = presets.Component({
             data: {
                 presetName: 'old-factory-value',
@@ -242,13 +223,15 @@ describe('presets Component', () => {
                 sameName: 'same-new-value'
             }
         });
-        expect(Component.mock.calls[0][0].data).toStrictEqual({
-            presetName: 'old-factory-value',
-            newName: 'new-value',
-            sameName: 'same-new-value'
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            data: {
+                newName: 'new-value',
+                sameName: 'same-new-value'
+            },
+            behaviors: ['x']
         });
     });
-    test('when preset with multi factories then merge option.data', () => {
+    test('when factory-options have data-property then wrap with Behavior', () => {
         const factory1 = presets.Component({
             data: {
                 presetName1: 'factory1-value-1',
@@ -278,17 +261,16 @@ describe('presets Component', () => {
                 sameName3: 'newest-same-name-3'
             }
         });
-        expect(Component.mock.calls[0][0].data).toStrictEqual({
-            presetName1: 'factory1-value-1',
-            presetName2: 'factory2-value-2',
-            presetName3: 'factory3-value-3',
-            newName: 'newest-value',
-            sameName1: 'factory3-same-name-3',
-            sameName2: 'newest-same-name-2',
-            sameName3: 'newest-same-name-3'
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            data: {
+                newName: 'newest-value',
+                sameName2: 'newest-same-name-2',
+                sameName3: 'newest-same-name-3'
+            },
+            behaviors: ['x', 'x', 'x']
         });
     });
-    test('when preset with option&factory then merge keys', () => {
+    test('when config-option and factory-option have custom-properties then merge custom-properties', () => {
         const option1 = {
             presetName1: 'factory1-value-1',
             sameName1: 'factory1-same-name-1',
@@ -305,38 +287,56 @@ describe('presets Component', () => {
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
         });
+        expect(Component.mock.calls[0][0]).toStrictEqual({
+            presetName1: 'factory1-value-1',
+            presetName3: 'factory3-value-3',
+            newName: 'newest-value',
+            sameName1: 'factory3-same-name-3',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
+    });
+});
 
-        expect(Component.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
-        expect(Component.mock.calls[0][0].presetName3).toEqual('factory3-value-3');
-        expect(Component.mock.calls[0][0].newName).toEqual('newest-value');
-        expect(Component.mock.calls[0][0].sameName1).toEqual('factory3-same-name-3');
-        expect(Component.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-        expect(Component.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+describe('Page with added Constructor', () => {
+    beforeEach(() => {
+        global.Component = jest.fn();
+        global.Behavior = jest.fn()
+            .mockReturnValueOnce('1')
+            .mockReturnValueOnce('2')
+            .mockReturnValue('x');
     });
     test('when constructor is provided then apply constructor', () => {
         const option1 = {
             presetName1: 'factory1-value-1',
             sameName1: 'factory1-same-name-1',
-            sameName3: 'factory1-same-name-3'
+            sameName3: 'factory1-same-name-3',
+            data: {}
         };
         const option2 = presets.Component({
             presetName3: 'factory3-value-3',
             sameName1: 'factory3-same-name-3',
-            sameName2: 'factory3-same-name-3'
+            sameName2: 'factory3-same-name-3',
+            data: {}
         });
         const NewComponent = presets.Component(option1, option2);
         const constructor = jest.fn();
         NewComponent({
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
-            sameName3: 'newest-same-name-3'
+            sameName3: 'newest-same-name-3',
+            data: {}
         }, constructor);
 
-        expect(constructor.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
-        expect(constructor.mock.calls[0][0].presetName3).toEqual('factory3-value-3');
-        expect(constructor.mock.calls[0][0].newName).toEqual('newest-value');
-        expect(constructor.mock.calls[0][0].sameName1).toEqual('factory3-same-name-3');
-        expect(constructor.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-        expect(constructor.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+        expect(constructor.mock.calls[0][0]).toStrictEqual({
+            presetName1: 'factory1-value-1',
+            presetName3: 'factory3-value-3',
+            sameName1: 'factory3-same-name-3',
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+            behaviors: ['2', '1']
+        });
     });
-});
+})

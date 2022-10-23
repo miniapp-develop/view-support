@@ -45,7 +45,7 @@ describe('Page with config-option', () => {
         expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
     });
 
-    test('when config-option has data-property then merge option.data', () => {
+    test('when config-option has data-property then wrap with Behavior', () => {
         const NewPage = presets.Page({
             data: {
                 name1: 'preset-value'
@@ -56,9 +56,11 @@ describe('Page with config-option', () => {
                 name2: 'newest-value'
             }
         });
-        expect(Page.mock.calls[0][0].data).toStrictEqual({
-            name1: 'preset-value',
-            name2: 'newest-value'
+        expect(Page.mock.calls[0][0]).toStrictEqual({
+            data: {
+                name2: 'newest-value'
+            },
+            behaviors: ['/bcdef']
         });
     });
 
@@ -73,9 +75,11 @@ describe('Page with config-option', () => {
                 name2: 'newest-value'
             }
         });
-        expect(Page.mock.calls[0][0].options).toStrictEqual({
-            name1: 'preset-value',
-            name2: 'newest-value'
+        expect(Page.mock.calls[0][0]).toStrictEqual({
+            options: {
+                name1: 'preset-value',
+                name2: 'newest-value'
+            }
         });
     });
 
@@ -93,7 +97,12 @@ describe('Page with config-option', () => {
 describe('Page with factory-option', () => {
     beforeEach(() => {
         global.Page = jest.fn();
-        global.Behavior = jest.fn().mockReturnValue('/bcdef');
+        global.Behavior = jest.fn()
+            .mockReturnValueOnce('1')
+            .mockReturnValueOnce('2')
+            .mockReturnValueOnce('3')
+            .mockReturnValueOnce('4')
+            .mockReturnValueOnce('x');
     });
     test('when factory-option has custom-properties then merge custom-properties', () => {
         const aOldPageFactory = presets.Page({
@@ -105,9 +114,11 @@ describe('Page with factory-option', () => {
             newName: 'new-value',
             sameName: 'same-new-value'
         });
-        expect(Page.mock.calls[0][0].presetName).toEqual('old-factory-value');
-        expect(Page.mock.calls[0][0].newName).toEqual('new-value');
-        expect(Page.mock.calls[0][0].sameName).toEqual('same-new-value');
+        expect(Page.mock.calls[0][0]).toEqual({
+            presetName: 'old-factory-value',
+            newName: 'new-value',
+            sameName: 'same-new-value'
+        });
     });
     test('when factory-options have custom-properties then merge custom-properties', () => {
         const factory1 = presets.Page({
@@ -126,14 +137,16 @@ describe('Page with factory-option', () => {
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
         });
-        expect(Page.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
-        expect(Page.mock.calls[0][0].presetName2).toEqual('factory2-value-2');
-        expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
-        expect(Page.mock.calls[0][0].sameName1).toEqual('factory2-same-name-2');
-        expect(Page.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-        expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+        expect(Page.mock.calls[0][0]).toStrictEqual({
+            presetName1: 'factory1-value-1',
+            presetName2: 'factory2-value-2',
+            sameName1: 'factory2-same-name-2',
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
     });
-    test('when config-option has data-property then merge option.data', () => {
+    test('when config-option has data-property then wrap with Behavior', () => {
         const aOldPageFactory = presets.Page({
             data: {
                 presetName: 'old-factory-value',
@@ -145,15 +158,11 @@ describe('Page with factory-option', () => {
             data: {
                 newName: 'new-value',
                 sameName: 'same-new-value'
-            }
-        });
-        expect(Page.mock.calls[0][0].data).toStrictEqual({
-            presetName: 'old-factory-value',
-            newName: 'new-value',
-            sameName: 'same-new-value'
+            },
+            behaviors: ['/bcdef']
         });
     });
-    test('when config-options have data-property then merge option.data', () => {
+    test('when config-options have data-property then wrap with Behavior', () => {
         const factory1 = presets.Page({
             data: {
                 presetName1: 'factory1-value-1',
@@ -183,14 +192,13 @@ describe('Page with factory-option', () => {
                 sameName3: 'newest-same-name-3'
             }
         });
-        expect(Page.mock.calls[0][0].data).toStrictEqual({
-            presetName1: 'factory1-value-1',
-            presetName2: 'factory2-value-2',
-            presetName3: 'factory3-value-3',
-            newName: 'newest-value',
-            sameName1: 'factory3-same-name-3',
-            sameName2: 'newest-same-name-2',
-            sameName3: 'newest-same-name-3'
+        expect(Page.mock.calls[0][0]).toStrictEqual({
+            data: {
+                newName: 'newest-value',
+                sameName2: 'newest-same-name-2',
+                sameName3: 'newest-same-name-3'
+            },
+            behaviors: ['3', '2', '1']
         });
     });
 });
@@ -204,7 +212,7 @@ describe('Page with factory-option and config-option', () => {
         const option1 = {
             presetName1: 'factory1-value-1',
             sameName1: 'factory1-same-name-1',
-            sameName3: 'factory1-same-name-3'
+            sameName3: 'factory1-same-name-31'
         };
         const option2 = presets.Page({
             presetName3: 'factory3-value-3',
@@ -217,13 +225,14 @@ describe('Page with factory-option and config-option', () => {
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
         });
-
-        expect(Page.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
-        expect(Page.mock.calls[0][0].presetName3).toEqual('factory3-value-3');
-        expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
-        expect(Page.mock.calls[0][0].sameName1).toEqual('factory3-same-name-3');
-        expect(Page.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-        expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+        expect(Page.mock.calls[0][0]).toStrictEqual({
+            presetName1: 'factory1-value-1',
+            presetName3: 'factory3-value-3',
+            newName: 'newest-value',
+            sameName1: 'factory3-same-name-3',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
     });
     test('when config-option and factory-option have custom-properties then merge custom-properties', () => {
         const option1 = {
@@ -241,46 +250,58 @@ describe('Page with factory-option and config-option', () => {
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3'
-        });
+        })
 
-        expect(Page.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
-        expect(Page.mock.calls[0][0].presetName3).toEqual('factory3-value-3');
-        expect(Page.mock.calls[0][0].newName).toEqual('newest-value');
-        expect(Page.mock.calls[0][0].sameName1).toEqual('factory1-same-name-1');
-        expect(Page.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-        expect(Page.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+        expect(Page.mock.calls[0][0]).toStrictEqual({
+            presetName3: 'factory3-value-3',
+            presetName1: 'factory1-value-1',
+            sameName1: 'factory1-same-name-1',
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3'
+        });
     });
 });
 
 describe('Page with added Constructor', () => {
     beforeEach(() => {
         global.Page = jest.fn();
-        global.Behavior = jest.fn().mockReturnValue('/bcdef');
+        global.Behavior = jest.fn()
+            .mockReturnValueOnce('1')
+            .mockReturnValueOnce('2')
+            .mockReturnValue('x');
     });
     test('when constructor is provided then use the arg-constructor', () => {
         const option1 = {
             presetName1: 'factory1-value-1',
             sameName1: 'factory1-same-name-1',
-            sameName3: 'factory1-same-name-3'
+            sameName3: 'factory1-same-name-3',
+            data: {}
         };
         const option2 = presets.Page({
             presetName3: 'factory3-value-3',
             sameName1: 'factory3-same-name-3',
-            sameName2: 'factory3-same-name-3'
+            sameName2: 'factory3-same-name-3',
+            data: {}
         });
         const NewPage = presets.Page(option1, option2);
         const constructor = jest.fn();
         NewPage({
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
-            sameName3: 'newest-same-name-3'
+            sameName3: 'newest-same-name-3',
+            data: {}
         }, constructor);
 
-        expect(constructor.mock.calls[0][0].presetName1).toEqual('factory1-value-1');
-        expect(constructor.mock.calls[0][0].presetName3).toEqual('factory3-value-3');
-        expect(constructor.mock.calls[0][0].newName).toEqual('newest-value');
-        expect(constructor.mock.calls[0][0].sameName1).toEqual('factory3-same-name-3');
-        expect(constructor.mock.calls[0][0].sameName2).toEqual('newest-same-name-2');
-        expect(constructor.mock.calls[0][0].sameName3).toEqual('newest-same-name-3');
+        expect(constructor.mock.calls[0][0]).toStrictEqual({
+            presetName1: 'factory1-value-1',
+            presetName3: 'factory3-value-3',
+            sameName1: 'factory3-same-name-3',
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+            behaviors: ['2', '1']
+        });
     });
 });
