@@ -10,3 +10,4 @@ sitemap.json
 *.iml
 .eslintrc.js
 test
+__test__
