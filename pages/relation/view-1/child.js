@@ -3,6 +3,7 @@ const DemoComponent = require("../../DemoComponent");
 import {child} from './pc';
 
 child({
+    options: {virtualHost: true},
     properties: {
         current: {
             type: String,
