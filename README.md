@@ -40,9 +40,9 @@ Behavior 自身已经支持的属性包括：
 1、 创建预设组件
 
 ```javascript
-const {createPresetComponent} = require("@mini-dev/view-support");
+const {presets} = require("@mini-dev/view-support");
 
-export const MyComponent = createPresetComponent({
+export const MyComponent = presets.Component({
     externalClasses: ['xxx-class'],
     options: {
         styleIsolation: 'isolated',
@@ -69,24 +69,24 @@ MyComponent({
 如果想使用其他已封装的 Component 构造方法，也可以通过参数显式指定，以预置的 MiniComponent 为例：
 
 ```javascript
-const {MiniComponent} = require("@mini-dev/view-support");
+const {defaults} = require("@mini-dev/view-support");
 
 MyComponent({
     properties: {},
     data: {},
     methods: {}
-}, MiniComponent);
+}, defaults.MiniComponent);
 
 ```
 
 或者在创建的时候直接绑定：
 
 ```javascript
-const {createPresetComponent, MiniComponent} = require("@mini-dev/view-support");
+const {presets, defaults} = require("@mini-dev/view-support");
 
-const MyComponent = createPresetComponent({
+const MyComponent = presets.Component({
     ...
-}, MiniComponent);
+}, defaults.MiniComponent);
 
 MyComponent({
     ...
@@ -94,14 +94,16 @@ MyComponent({
 
 ```
 
+但是这两种方式有一个重大差异：presets.Component 的参数是作为预设值参与合并的，因此优先级比调用时传值要低。
+
 ### 管理组件间关系
 
 1、创建一个关系
 
 ```javascript
-const {connectParentChildren} = require("@mini-dev/view-support");
+const {relations} = require("@mini-dev/view-support");
 
-export const {parent, child} = connectParentChildren();
+export const {parent, child} = relations.createParentChild();
 
 ```
 
@@ -111,8 +113,13 @@ export const {parent, child} = connectParentChildren();
 
 ```javascript
 
-parent({});
-
+parent({
+    methods: {
+        onRelationChanged(event, child) {
+            //...
+        }
+    }
+});
 ```
 
 子节点(child.wxml, child.js)
@@ -131,24 +138,26 @@ child({
         }
     },
     methods: {
-        onMiniChanged({active}) {
-            console.log('child onRelativeStateChanged', active);
-            this.setData({
-                show: active === this.data.tag
-            });
+        onRelationChanged(event, parent) {
+            //...
         }
     }
 });
 
 ```
 
+父级组件可以通过 getRelationChildren 获取子级组件（Node List）。
+子级组件可以通过 getRelationParent 获取父级组件（A Node）。
+
 3、正常使用组件
 ```html
 <parent mini-data="{{active}}">
-    <child mini-data="t1" />
-    <child mini-data="t2" />
+    <child tag="t1" />
+    <child tag="t2" />
 </parent>
 ```
+
+
 也可以直接导入查看 demo
 
 ## ChangeLog
