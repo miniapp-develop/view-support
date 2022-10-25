@@ -162,6 +162,14 @@ child({
 
 ## ChangeLog
 
+### 0.1.1
+1. relations 增加一对多的关系。
+2. presets 增加。
+3. defaults.MiniComponent 增加 virtualHost: true 默认配置。
+
+### 0.1.0
+1. API 不兼容调整。
+
 ### 0.0.5
 1. 支持多个构造器。
 
