@@ -21,8 +21,11 @@ export const ParentView = Component(
             }
         },
         methods: {
-            onRelationChanged(event, target) {
-                console.log('ParentView', event, target);
+            onRelationChanged(event, child) {
+                console.log('ParentView', this.data, event, child);
+                if (event === 'linked') {
+                    child.onParentDataChanged(this.data.current2);
+                }
             }
         }
     },
@@ -49,6 +52,7 @@ export const ChildView = Component(
                 })
             },
             onParentDataChanged(current) {
+                console.log('onParentDataChanged', this.data.current, current)
                 this.setData({
                     active: this.data.current === current
                 });

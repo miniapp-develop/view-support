@@ -21,9 +21,7 @@ parent({
     methods: {
         onRelationChanged(event, child) {
             if (event === 'linked') {
-                child.setData({
-                    text: event
-                });
+                child.onParentDataChanged(this.data.current);
             }
         }
     }
