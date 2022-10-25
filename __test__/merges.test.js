@@ -66,6 +66,18 @@ describe('mergePageOption', () => {
         expect(mergedOption).toStrictEqual({});
     });
 
+    test('when inputOption is falsy then inputOption keep null', () => {
+        const inputOption = null;
+        const mergedOption = merges.mergePageOption(presetOption, inputOption);
+        expect(inputOption).toBeNull();
+    });
+
+    test('when inputOption is empty then inputOption keep empty', () => {
+        const inputOption = {};
+        const mergedOption = merges.mergePageOption(presetOption, inputOption);
+        expect(inputOption).toEqual({});
+    });
+
     test('when presetOption has BehaviorOwnProperty then wrap presetOption with Behavior', () => {
         const mergedOption = merges.mergePageOption(presetOption, null);
 
@@ -127,6 +139,21 @@ describe('mergePageOption', () => {
         const mergedOption = merges.mergePageOption(presetOption, inputOption);
 
         expect(global.Behavior).toBeCalledTimes(1);
+        expect(inputOption).toStrictEqual({
+            __attr__: 'inputOption.__attr__',
+            options: {
+                'options-key': 'inputOption.options.value',
+                'input-options-key': 'inputOption.options.value'
+            },
+            data: {
+                'data-key': 'inputOption.data.value',
+                'input-data-key': 'inputOption.data.value'
+            },
+            behaviors: ['inputOption.behavior.1'],
+            onShow: onShow,
+            onUnload: onUnload,
+            pageMethod: pageMethod
+        });
 
         expect(mergedOption).toStrictEqual({
             __attr__: 'inputOption.__attr__',
@@ -275,6 +302,18 @@ describe('mergeComponentOption', () => {
         expect(mergedOption).toStrictEqual({});
     });
 
+    test('when inputOption is falsy then inputOption keep null', () => {
+        const inputOption = null;
+        const mergedOption = merges.mergeComponentOption(presetOption, inputOption);
+        expect(inputOption).toBeNull();
+    });
+
+    test('when inputOption is empty then inputOption keep empty', () => {
+        const inputOption = {};
+        const mergedOption = merges.mergeComponentOption(presetOption, inputOption);
+        expect(inputOption).toEqual({});
+    });
+
     test('when presetOption has BehaviorOwnProperty then wrap presetOption with Behavior', () => {
         const mergedOption = merges.mergeComponentOption(presetOption, null);
 
@@ -357,6 +396,38 @@ describe('mergeComponentOption', () => {
 
     test('when presetOption and inputOption all has BehaviorOwnProperty then wrap presetOption with Behavior', () => {
         const mergedOption = merges.mergeComponentOption(presetOption, inputOption);
+        expect(inputOption).toStrictEqual({
+            __attr__: 'inputOption.__attr__',
+            options: {
+                'options-key': 'inputOption.options.value'
+            },
+            data: {
+                'data-key': 'inputOption.data.value'
+            },
+            behaviors: ['inputOption.behavior.1'],
+            externalClasses: ['inputOption-class-1'],
+            properties: {},
+            observers: {},
+            relations: {},
+            methods: {},
+            created: created,
+            attached: attached,
+            ready: ready,
+            moved: moved,
+            detached: detached,
+            lifetimes: {
+                created: created,
+                attached: attached,
+                ready: ready,
+                moved: moved,
+                detached: detached
+            },
+            pageLifetimes: {
+                show: showOfPageLifetimes,
+                hide: hideOfPageLifetimes,
+                resize: resizeOfPageLifetimes
+            }
+        });
         expect(mergedOption).toStrictEqual({
             __attr__: 'inputOption.__attr__',
             options: {
