@@ -322,19 +322,22 @@ describe('Page with compounded', () => {
             presetName1: 'factory1-name-1',
             sameName1: 'factory1-same-name-1',
             sameName3: 'factory1-same-name-3',
-            data: {}
+            data: {},
+            behaviors: ['option1']
         });
         const option2 = presets.Page({
             presetName2: 'factory2-name-2',
             sameName1: 'factory2-same-name-3',
             sameName2: 'factory2-same-name-3',
-            data: {}
+            data: {},
+            behaviors: ['option2']
         });
         const option3 = presets.Page({
             presetName3: 'factory3-name-3',
             sameName1: 'factory3-same-name-3',
             sameName2: 'factory3-same-name-3',
-            data: {}
+            data: {},
+            behaviors: ['option3']
         });
         const CompoundPage = presets.Page(option1, option2);
         const NewPage = presets.Page(CompoundPage, option3);
@@ -343,7 +346,8 @@ describe('Page with compounded', () => {
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3',
-            data: {}
+            data: {},
+            behaviors: ['option4']
         });
 
         expect(Page.mock.calls[0][0]).toStrictEqual({
@@ -358,7 +362,7 @@ describe('Page with compounded', () => {
             sameName3: 'newest-same-name-3',
             data: {},
 
-            behaviors: ['3', '2', '1']
+            behaviors: ['option1', '3', 'option2', '2', 'option3', '1', 'option4']
         });
     });
 });
