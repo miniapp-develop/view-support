@@ -305,3 +305,60 @@ describe('Page with added Constructor', () => {
         });
     });
 });
+
+describe('Page with compounded', () => {
+    beforeEach(() => {
+        global.Page = jest.fn();
+        global.Behavior = jest.fn()
+            .mockReturnValueOnce('1')
+            .mockReturnValueOnce('2')
+            .mockReturnValueOnce('3')
+            .mockReturnValueOnce('4')
+            .mockReturnValueOnce('5')
+            .mockReturnValue('x');
+    });
+    test('when factory-option is compounded then treat compound-factory as a simple factory', () => {
+        const option1 = presets.Page({
+            presetName1: 'factory1-name-1',
+            sameName1: 'factory1-same-name-1',
+            sameName3: 'factory1-same-name-3',
+            data: {}
+        });
+        const option2 = presets.Page({
+            presetName2: 'factory2-name-2',
+            sameName1: 'factory2-same-name-3',
+            sameName2: 'factory2-same-name-3',
+            data: {}
+        });
+        const option3 = presets.Page({
+            presetName3: 'factory3-name-3',
+            sameName1: 'factory3-same-name-3',
+            sameName2: 'factory3-same-name-3',
+            data: {}
+        });
+        const CompoundPage = presets.Page(option1, option2);
+        const NewPage = presets.Page(CompoundPage, option3);
+
+        NewPage({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {}
+        });
+
+        expect(Page.mock.calls[0][0]).toStrictEqual({
+            presetName1: 'factory1-name-1',
+            presetName2: 'factory2-name-2',
+            presetName3: 'factory3-name-3',
+
+            sameName1: 'factory3-same-name-3',
+
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+
+            behaviors: ['3', '2', '1']
+        });
+    });
+});
