@@ -97,20 +97,8 @@ export const FormItem = presets.Component(descendant, defaults.MiniComponent, {
     }
 });
 
-export const InputComp = presets.Component(FormItem);
-export const Input = function (option) {
-    InputComp(option, function (fOption) {
-        Component(fOption)
-    });
-};
-
-export const TextareaComp = presets.Component(FormItem);
-export const Textarea = function (option) {
-    TextareaComp(option, function (fOption) {
-        Component(fOption)
-    });
-};
-
+export const Input = presets.Component(FormItem);
+export const Textarea = presets.Component(FormItem);
 export const FormAction = presets.Component(descendant, defaults.MiniComponent,
     {
         methods: {

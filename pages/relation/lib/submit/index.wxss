@@ -1,0 +1,4 @@
+.mini-view {
+    text-align: center;
+    padding: 1em;
+}

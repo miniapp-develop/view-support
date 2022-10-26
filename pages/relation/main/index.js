@@ -3,10 +3,7 @@ Page({
     data: {
         __name__: 'relation',
         current: '1',
-        current2: '1',
-        miniData3: {
-            active: 0
-        }
+        current2: '1'
     },
     behaviors: [be],
     onTapShowChild1(e) {

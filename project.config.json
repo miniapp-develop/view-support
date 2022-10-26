@@ -30,7 +30,33 @@
     "useIsolateContext": true,
     "ignoreUploadUnusedFiles": true
   },
-  "condition": {},
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "预设组件",
+          "pathName": "pages/preset/main/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "关联组件-Demo",
+          "pathName": "pages/relation/main/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "关联组件-Form",
+          "pathName": "pages/relation/forms/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  },
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2

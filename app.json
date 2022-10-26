@@ -2,7 +2,8 @@
   "pages": [
     "pages/main/index",
     "pages/preset/main/index",
-    "pages/relation/main/index"
+    "pages/relation/main/index",
+    "pages/relation/forms/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

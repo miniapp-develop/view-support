@@ -34,9 +34,13 @@ Page({
             wx.navigateTo({
                 url: '/pages/preset/main/index'
             });
-        } else if (name === 'relation') {
+        } else if (name === 'relation-demo') {
             wx.navigateTo({
                 url: '/pages/relation/main/index'
+            });
+        } else if (name === 'relation-form') {
+            wx.navigateTo({
+                url: '/pages/relation/forms/index'
             });
         }
     }

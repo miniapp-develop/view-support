@@ -2,6 +2,7 @@
   "usingComponents": {
     "form-container": "../lib/form/index",
     "form-input": "../lib/input/index",
-    "form-textarea": "../lib/textarea/index"
+    "form-textarea": "../lib/textarea/index",
+    "form-submit": "../lib/submit/index"
   }
 }

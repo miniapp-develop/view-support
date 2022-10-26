@@ -1,4 +1,5 @@
 <view class="main">
     <view class="cell" data-name="preset" bind:tap="onTap">预设构造器</view>
-    <view class="cell" data-name="relation" bind:tap="onTap">配置关联组件</view>
+    <view class="cell" data-name="relation-demo" bind:tap="onTap">配置关联组件</view>
+    <view class="cell" data-name="relation-form" bind:tap="onTap">配置关联组件:Form</view>
 </view>

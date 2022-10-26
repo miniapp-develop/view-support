@@ -2,5 +2,6 @@
     <form-container model="{{viewModel}}">
         <form-input model-name="name"/>
         <form-textarea model-name="rule"/>
+        <form-submit>提交</form-submit>
     </form-container>
 </view>
