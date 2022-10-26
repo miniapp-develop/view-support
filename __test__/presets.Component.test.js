@@ -342,6 +342,10 @@ describe('Component with added Constructor', () => {
 })
 
 describe('Component with compounded', () => {
+    let option1;
+    let option2;
+    let option3;
+    let option4;
     beforeEach(() => {
         global.Component = jest.fn();
         global.Behavior = jest.fn()
@@ -350,35 +354,57 @@ describe('Component with compounded', () => {
             .mockReturnValueOnce('3')
             .mockReturnValueOnce('4')
             .mockReturnValueOnce('5')
+            .mockReturnValueOnce('6')
             .mockReturnValue('x');
-    });
-    test('when factory-option is compounded then treat compound-factory as a simple factory', () => {
-        const option1 = presets.Component({
+        option1 = presets.Component({
             presetName1: 'factory1-name-1',
             sameName1: 'factory1-same-name-1',
             sameName3: 'factory1-same-name-3',
-            data: {}
+            data: {},
+            behaviors: ['option1']
         });
-        const option2 = presets.Component({
-            presetName2: 'factory2-name-2',
-            sameName1: 'factory2-same-name-3',
-            sameName2: 'factory2-same-name-3',
-            data: {}
-        });
-        const option3 = presets.Component({
-            presetName3: 'factory3-name-3',
-            sameName1: 'factory3-same-name-3',
-            sameName2: 'factory3-same-name-3',
-            data: {}
-        });
-        const CompoundPage = presets.Component(option1, option2);
-        const NewPage = presets.Component(CompoundPage, option3);
 
-        NewPage({
+        option2 = presets.Component({
+            presetName2: 'factory2-name-2',
+            sameName1: 'factory2-same-name-1',
+            sameName2: 'factory2-same-name-2',
+            data: {},
+            behaviors: ['option2']
+        });
+
+        option3 = presets.Component({
+            presetName3: 'factory3-name-3',
+            sameName1: 'factory3-same-name-1',
+            sameName2: 'factory3-same-name-2',
+            data: {},
+            behaviors: ['option3']
+        });
+
+        option4 = presets.Component({
+            presetName4: 'factory4-name-4',
+            sameName1: 'factory4-same-name-1',
+            sameName2: 'factory4-same-name-2',
+            data: {},
+            behaviors: ['option4']
+        });
+    });
+    test('when factory-option is compounded then treat compound-factory as a simple factory', () => {
+        const CompoundComponent = presets.Component(option1, option2);
+        const NewComponent1 = presets.Component(CompoundComponent, option3);
+        const NewComponent2 = presets.Component(CompoundComponent, option4);
+        NewComponent1({
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3',
-            data: {}
+            data: {},
+            behaviors: ['option5']
+        });
+        NewComponent2({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+            behaviors: ['option5']
         });
 
         expect(Component.mock.calls[0][0]).toStrictEqual({
@@ -386,14 +412,48 @@ describe('Component with compounded', () => {
             presetName2: 'factory2-name-2',
             presetName3: 'factory3-name-3',
 
-            sameName1: 'factory3-same-name-3',
+            sameName1: 'factory3-same-name-1',
 
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3',
             data: {},
 
-            behaviors: ['3', '2', '1']
+            behaviors: ['option1', '3', 'option2', '2', 'option3', '1', 'option5']
+        });
+    });
+    test('when factory-option is compounded then treat compound-factory as a simple factory', () => {
+        const CompoundComponent = presets.Component(option1, option2);
+        const NewComponent1 = presets.Component(CompoundComponent, option3);
+        const NewComponent2 = presets.Component(CompoundComponent, option4);
+        NewComponent1({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+            behaviors: ['option5']
+        });
+        NewComponent2({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+            behaviors: ['option5']
+        });
+
+        expect(Component.mock.calls[1][0]).toStrictEqual({
+            presetName1: 'factory1-name-1',
+            presetName2: 'factory2-name-2',
+            presetName4: 'factory4-name-4',
+
+            sameName1: 'factory4-same-name-1',
+
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+
+            behaviors: ['option1', '6', 'option2', '5', 'option4', '4', 'option5']
         });
     });
 });

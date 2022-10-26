@@ -307,6 +307,10 @@ describe('Page with added Constructor', () => {
 });
 
 describe('Page with compounded', () => {
+    let option1;
+    let option2;
+    let option3;
+    let option4;
     beforeEach(() => {
         global.Page = jest.fn();
         global.Behavior = jest.fn()
@@ -315,39 +319,59 @@ describe('Page with compounded', () => {
             .mockReturnValueOnce('3')
             .mockReturnValueOnce('4')
             .mockReturnValueOnce('5')
+            .mockReturnValueOnce('6')
             .mockReturnValue('x');
-    });
-    test('when factory-option is compounded then treat compound-factory as a simple factory', () => {
-        const option1 = presets.Page({
+
+        option1 = presets.Page({
             presetName1: 'factory1-name-1',
             sameName1: 'factory1-same-name-1',
             sameName3: 'factory1-same-name-3',
             data: {},
             behaviors: ['option1']
         });
-        const option2 = presets.Page({
+
+        option2 = presets.Page({
             presetName2: 'factory2-name-2',
-            sameName1: 'factory2-same-name-3',
-            sameName2: 'factory2-same-name-3',
+            sameName1: 'factory2-same-name-1',
+            sameName2: 'factory2-same-name-2',
             data: {},
             behaviors: ['option2']
         });
-        const option3 = presets.Page({
+
+        option3 = presets.Page({
             presetName3: 'factory3-name-3',
-            sameName1: 'factory3-same-name-3',
-            sameName2: 'factory3-same-name-3',
+            sameName1: 'factory3-same-name-1',
+            sameName2: 'factory3-same-name-2',
             data: {},
             behaviors: ['option3']
         });
-        const CompoundPage = presets.Page(option1, option2);
-        const NewPage = presets.Page(CompoundPage, option3);
 
-        NewPage({
+        option4 = presets.Page({
+            presetName4: 'factory4-name-4',
+            sameName1: 'factory4-same-name-1',
+            sameName2: 'factory4-same-name-2',
+            data: {},
+            behaviors: ['option4']
+        });
+
+    });
+    test('when factory-option is compounded then treat compound-factory as a simple factory', () => {
+        const CompoundPage = presets.Page(option1, option2);
+        const NewPage1 = presets.Page(CompoundPage, option3);
+        const NewPage2 = presets.Page(CompoundPage, option4);
+        NewPage1({
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3',
             data: {},
-            behaviors: ['option4']
+            behaviors: ['option5']
+        });
+        NewPage2({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+            behaviors: ['option5']
         });
 
         expect(Page.mock.calls[0][0]).toStrictEqual({
@@ -355,14 +379,48 @@ describe('Page with compounded', () => {
             presetName2: 'factory2-name-2',
             presetName3: 'factory3-name-3',
 
-            sameName1: 'factory3-same-name-3',
+            sameName1: 'factory3-same-name-1',
 
             newName: 'newest-value',
             sameName2: 'newest-same-name-2',
             sameName3: 'newest-same-name-3',
             data: {},
 
-            behaviors: ['option1', '3', 'option2', '2', 'option3', '1', 'option4']
+            behaviors: ['option1', '3', 'option2', '2', 'option3', '1', 'option5']
+        });
+    });
+    test('when factory-option is compounded then treat compound-factory as a simple factory', () => {
+        const CompoundPage = presets.Page(option1, option2);
+        const NewPage1 = presets.Page(CompoundPage, option3);
+        const NewPage2 = presets.Page(CompoundPage, option4);
+        NewPage1({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+            behaviors: ['option5']
+        });
+        NewPage2({
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+            behaviors: ['option5']
+        });
+
+        expect(Page.mock.calls[1][0]).toStrictEqual({
+            presetName1: 'factory1-name-1',
+            presetName2: 'factory2-name-2',
+            presetName4: 'factory4-name-4',
+
+            sameName1: 'factory4-same-name-1',
+
+            newName: 'newest-value',
+            sameName2: 'newest-same-name-2',
+            sameName3: 'newest-same-name-3',
+            data: {},
+
+            behaviors: ['option1', '6', 'option2', '5', 'option4', '4', 'option5']
         });
     });
 });
