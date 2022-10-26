@@ -1,0 +1,9 @@
+.form-name {
+    color: #333;
+    min-width: 5em;
+    text-align: left;
+}
+
+.form-name:after {
+    content: ' : ';
+}

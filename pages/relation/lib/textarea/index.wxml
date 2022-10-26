@@ -1,0 +1,15 @@
+<view class="mini-textarea {{disabled ? 'disabled' :''}} mini-class">
+    <view class="form-name">{{item.name}}</view>
+    <view class="form-value">
+        <text wx:if="{{disabled}}"
+              class="textarea-view textarea-view--disabled">{{valueView}}
+        </text>
+        <view wx:else class="textarea-view">
+            <textarea value="{{valueView}}"
+                      placeholder="{{item.placeholder}}"
+                      auto-height
+                      class="textarea-view__value"
+                      bind:input="onChanged"/>
+        </view>
+    </view>
+</view>

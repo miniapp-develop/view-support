@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "form-container": "../lib/form/index",
+    "form-input": "../lib/input/index",
+    "form-textarea": "../lib/textarea/index"
+  }
+}

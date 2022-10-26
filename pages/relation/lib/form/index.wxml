@@ -1,0 +1,3 @@
+<view class="mini-form mini-class">
+    <slot></slot>
+</view>

@@ -1,0 +1,26 @@
+@import "../styles/index.wxss";
+
+.mini-input {
+    display: flex;
+    padding: 0.5em 0;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.mini-input.disabled {
+    border: none;
+}
+
+.input-view {
+    flex: 1;
+    display: flex;
+}
+
+.input-view__value {
+    flex: 1;
+}
+
+.input-view__action {
+    font-style: italic;
+    color: cadetblue;
+    padding: 0 0.5em;
+}

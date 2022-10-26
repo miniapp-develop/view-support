@@ -1,0 +1,3 @@
+<view class="mini-view mini-class" bind:tap="onTap">
+    <slot></slot>
+</view>

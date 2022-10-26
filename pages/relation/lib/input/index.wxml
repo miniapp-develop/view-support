@@ -1,0 +1,12 @@
+<view class="mini-input {{disabled ? 'disabled' :''}} mini-class">
+    <view class="form-name">{{item.name}}</view>
+    <view class="input-view">
+        <input class="input-view__value "
+               value="{{valueView}}"
+               type="{{type}}"
+               placeholder="{{item.placeholder}}"
+               disabled="{{disabled}}"
+               bind:input="onChanged"/>
+        <!--        <view class="input-view__action" bind:tap="onTap">选择</view>-->
+    </view>
+</view>
