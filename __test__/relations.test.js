@@ -16,8 +16,13 @@ describe('relation', () => {
         expect(ancestor).toBeInstanceOf(Function);
         expect(descendant).toBeInstanceOf(Function);
     });
-    test('when create with config then return relation-behaviors', () => {
-        const {parent, children} = relation.createRelation('form', ['input', "button", "picker"]);
+    test('when create with parent and children then return relation-behaviors', () => {
+        const {parent, children} = relation.ParentChild('form', ['input', "button", "picker"]);
+        expect(parent).toEqual('1');
+        expect(children).toEqual(['1', '1', '1']);
+    });
+    test('when create with ancestor and descendant then return relation-behaviors', () => {
+        const {parent, children} = relation.AncestorDescendant('form', ['input', "button", "picker"]);
         expect(parent).toEqual('1');
         expect(children).toEqual(['1', '1', '1']);
     });
