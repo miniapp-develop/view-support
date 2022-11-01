@@ -1,5 +1,5 @@
 <view>
-    <form-container model="{{viewModel}}">
+    <form-container model="{{viewModel}}" bindsubmit="onFormSubmit">
         <form-input model-name="name"/>
         <form-textarea model-name="rule"/>
         <form-submit>提交</form-submit>

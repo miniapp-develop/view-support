@@ -15,5 +15,8 @@ Page({
             }
         }
     },
-    behaviors: [be]
+    behaviors: [be],
+    onFormSubmit(e) {
+        console.log('onFormSubmit', e);
+    }
 });

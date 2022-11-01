@@ -1,8 +1,11 @@
 import {defaults, presets, relations} from '../../../lib/index';
 
-const {ancestor, descendant} = relations.createAncestorDescendant();
+const {parent: BaseFormView, children: [BaseFormItemView, BaseActionView]} = relations.PresetAncestorDescendant(
+    {name: 'form'},
+    [{name: 'input'}, {name: 'action'}]
+);
 
-export const Form = presets.Component(ancestor, defaults.MiniComponent, {
+export const Form = presets.extendComponent(BaseFormView, defaults.MiniComponent, {
     options: {
         virtualHost: true
     },
@@ -14,7 +17,7 @@ export const Form = presets.Component(ancestor, defaults.MiniComponent, {
     },
     observers: {
         model(newModel) {
-            const children = this.getRelationChildren();
+            const children = this.getRelationChildren('input');
             for (const child of children) {
                 this.__notify__children(child, newModel);
             }
@@ -39,12 +42,12 @@ export const Form = presets.Component(ancestor, defaults.MiniComponent, {
             this.triggerEvent('change', this.data.model);
         },
         handleFormAction(actionType) {
-            this.triggerEvent('submit', actionType, this.data.model);
+            this.triggerEvent('submit', this.data.model);
         }
     }
 });
 
-export const FormItem = presets.Component(descendant, defaults.MiniComponent, {
+export const FormItem = presets.extendComponent(BaseFormItemView, defaults.MiniComponent, {
     properties: {
         modelName: {
             type: String,
@@ -97,13 +100,16 @@ export const FormItem = presets.Component(descendant, defaults.MiniComponent, {
     }
 });
 
-export const Input = presets.Component(FormItem);
-export const Textarea = presets.Component(FormItem);
-export const FormAction = presets.Component(descendant, defaults.MiniComponent,
+export const Input = presets.extendComponent(FormItem);
+export const Textarea = presets.extendComponent(FormItem);
+export const FormAction = presets.extendComponent(
+    BaseActionView,
+    defaults.MiniComponent,
     {
         methods: {
             onTap(e) {
                 this.getRelationParent().handleFormAction(this.data.type)
             }
         }
-    });
+    }
+);
