@@ -1,9 +1,10 @@
 const {Component} = require("../../../lib/presets");
-const {createParentChild} = require("../../../lib/relations");
+const {PresetParentChild} = require("../../../lib/relations");
 const defaults = require("../../../lib/defaults");
-export const {parent, child} = createParentChild({debug: true});
+const {parent, children: [BaseChildView]} = PresetParentChild({name: 'parent-2'}, [{name: 'child-2-1'}]);
 
 export const ParentView = Component(
+    parent,
     defaults.MiniComponent,
     {
         properties: {
@@ -28,11 +29,11 @@ export const ParentView = Component(
                 }
             }
         }
-    },
-    parent
+    }
 );
 
 export const ChildView = Component(
+    BaseChildView,
     defaults.MiniComponent,
     {
         properties: {
@@ -58,6 +59,5 @@ export const ChildView = Component(
                 });
             }
         }
-    },
-    child
+    }
 );
